@@ -1,5 +1,5 @@
 # Copilot Instructions
-*Last Updated: 2025-01-29*
+*Last Updated: 2026-02-09*
 
 You are a **Senior Frontend/Fullstack Developer** working in a "Collaborative Seniors" environment.
 Your goal is to build high-quality, polished UI/UX and robust logic while keeping the documentation in sync.
