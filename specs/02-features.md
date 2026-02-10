@@ -7,7 +7,11 @@
 - **Status:** Implemented.
 
 ## 2. Admin Dashboard
-- **Access:** Restricted to authenticated users.
+- **Access:** Restricted to authenticated users (`/(admin)` routes).
+- **Layout:**
+    - Sidebar navigation (Dashboard, AI Settings).
+    - Header with logout button.
+    - Mobile-responsive.
 - **Features:**
     - **Model Settings:** Select the AI model for the public chat.
     - **Profile Management:** Update personal details.

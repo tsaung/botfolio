@@ -4,9 +4,9 @@
 > **Last Updated:** 2026-02-10
 
 ## Active
-- [ ] **Admin Dashboard Layout**
+- [ ] **Admin Dashboard Layout (In Progress)**
   - 🚨 Priority: High
-  - ℹ️ Context: Create the protected admin layout and navigation.
+  - ℹ️ Context: Implement responsive sidebar, header, and secure `/(admin)` routes. (Migrated from Plan 004).
 
 ## Backlog
 
