@@ -27,12 +27,22 @@
 3.  **Setup Environment:**
     Copy `.env.local.example` (or create one) with:
     ```bash
-    NEXT_PUBLIC_SUPABASE_URL=...
+    # Supabase (Local Instance)
+    NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:64321
     NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+    
+    # OpenRouter
     OPENROUTER_API_KEY=...
     ```
 
-4.  **Run Development Server:**
+4.  **Start Local Supabase:**
+    This project uses a custom port configuration (643xx) to avoid conflicts with other local Supabase projects.
+    ```bash
+    npx supabase start
+    ```
+    *Note: The API URL and Keys will be output to the terminal after the start command finishes.*
+
+5.  **Run Development Server:**
     ```bash
     npm run dev
     ```
