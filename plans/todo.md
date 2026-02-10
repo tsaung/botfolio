@@ -8,8 +8,7 @@ This file contains the **Global Backlog** of all tasks, big or small, that are y
 - **Prioritization:** Move tasks to `plans/active/` when ready to start working on them.
 
 ## Active Plan
-- [ ] **Setup & Scaffolding** (`plans/active/001-setup-and-scaffolding.md`)
-  - ℹ️ Context: Initialize Next.js, Shadcn, Supabase client, and folder structure.
+*(No active plan currently. Select one from Backlog to start.)*
 
 ## Backlog
 
