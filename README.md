@@ -25,21 +25,34 @@
     npm install
     ```
 
-3.  **Setup Supabase:**
-    - Create a Supabase project (or use local).
-    - Run migrations:
-      ```bash
-      npx supabase db reset
-      ```
+3.  **Setup Environment:**
     - Copy `.env.local.example` to `.env.local` and fill in keys:
       ```bash
-      NEXT_PUBLIC_SUPABASE_URL=...
+      # Supabase (Local Instance)
+      NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:64321
       NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-      NEXT_PUBLIC_SITE_URL=http://localhost:3000
+      SUPABASE_SERVICE_ROLE_KEY=...
+      
+      # OpenRouter
       OPENROUTER_API_KEY=...
+      
+      # Site URL
+      NEXT_PUBLIC_SITE_URL=http://localhost:3000
       ```
 
-4.  **Run Development Server:**
+4.  **Start Local Supabase:**
+    This project uses a custom port configuration (643xx) to avoid conflicts with other local Supabase projects.
+    ```bash
+    npx supabase start
+    ```
+    *Note: The API URL and Keys will be output to the terminal after the start command finishes.*
+    
+    If this is your first time or need to reset the database:
+    ```bash
+    npx supabase db reset
+    ```
+
+5.  **Run Development Server:**
     ```bash
     npm run dev
     ```
