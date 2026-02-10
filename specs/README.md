@@ -9,6 +9,7 @@ Unlike traditional "Plans" which are transient, these files document the **curre
 3.  **TDD:** All changes must be verified by tests. The tests verify that the code meets the spec.
 
 ## Structure
+- `00-workflow.md`: The mandatory AI-Driven TDD Workflow and development protocols.
 - `01-system-overview.md`: High-level architecture, tech stack, and core principles.
 - `02-features.md`: Detailed breakdown of implemented features.
 - `03-database.md`: Schema, RLS policies, and data flow.
