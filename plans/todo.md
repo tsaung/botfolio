@@ -8,7 +8,11 @@ This file contains the **Global Backlog** of all tasks, big or small, that are y
 - **Prioritization:** Move tasks to `plans/active/` when ready to start working on them.
 
 ## Active Plan
-*(No active plan currently. Select one from Backlog to start.)*
+- [ ] **Visitor UI & Model Settings**
+  - 📅 Added: 2026-02-10
+  - 🚨 Priority: High
+  - 📝 Plan: [Visitor UI & Settings](plans/active/003-visitor-ui-and-model-settings.md)
+  - ℹ️ Context: Build the public chat interface and admin controls for the AI model.
 
 ## Backlog
 
@@ -18,11 +22,6 @@ This file contains the **Global Backlog** of all tasks, big or small, that are y
   - 🚨 Priority: High
   - 📝 Plan: [Setup Auth & DB](plans/completed/002-setup-auth-db.md)
   - ℹ️ Context: Implement `profiles` table and Supabase Auth (Email/Password).
-- [ ] **Visitor Chat Interface (UI)**
-  - 📅 Added: 2026-02-10
-  - 🚨 Priority: Medium
-  - 📝 Plan: Pending
-  - ℹ️ Context: Build the chat shell with Vercel AI SDK UI (`useChat`).
 
 ### Phase 2: RAG & Enrichment
 - [ ] **Admin Dashboard Layout**
