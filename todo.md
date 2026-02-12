@@ -1,22 +1,22 @@
 # AutoFolio Tasks
 
 > **Status:** Active Development
-> **Last Updated:** 2026-02-10
+> **Last Updated:** 2026-02-13
 
 ## Active
-- [ ] **Admin Dashboard Layout (In Progress)**
+- [x] **Admin Dashboard Layout**
   - 🚨 Priority: High
-  - ℹ️ Context: Implement responsive sidebar, header, and secure `/(admin)` routes. (Migrated from Plan 004).
+  - ℹ️ Context: Implement responsive sidebar, header, and secure `/(admin)` routes. Added Knowledge Base and Admin Chat UI scaffolding.
 
 ## Backlog
 
 ### Phase 2: RAG & Enrichment
 - [ ] **Profile Enrichment Chat (The Logic)**
   - 🚨 Priority: Medium
-  - ℹ️ Context: Implement the "Admin Agent" using Vercel AI SDK Core to generate RAG docs.
+  - ℹ️ Context: Implement the "Admin Agent" using Vercel AI SDK Core to generate RAG docs. Connect to `/admin/chat`.
 - [ ] **RAG Pipeline Implementation**
   - 🚨 Priority: Medium
-  - ℹ️ Context: Vectorize documents and implement retrieval logic.
+  - ℹ️ Context: Vectorize documents and implement retrieval logic. Connect to `/admin/knowledge`.
 
 ### Phase 3: Polish & Deployment
 - [ ] **Generative UI Widgets**

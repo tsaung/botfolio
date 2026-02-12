@@ -9,12 +9,20 @@
 ## 2. Admin Dashboard
 - **Access:** Restricted to authenticated users (`/(admin)` routes).
 - **Layout:**
-    - Sidebar navigation (Dashboard, AI Settings).
+    - Sidebar navigation (Dashboard, Knowledge Base, Improve with AI, AI Settings).
     - Header with logout button.
     - Mobile-responsive.
 - **Features:**
-    - **Model Settings:** Select the AI model for the public chat.
-    - **Profile Management:** Update personal details.
+    - **Overview:** Dashboard with key metrics (Knowledge Fragments, Chats).
+    - **Knowledge Base:** Manage RAG documents.
+        - **User Content:** Manually created documents (high confidence).
+        - **AI Generated:** Documents derived from other sources (lower confidence, reviewable).
+    - **Improve with AI (Content Studio):** An interactive "Canvas" for generating high-quality RAG content.
+        - **Concept:** Admin acts as Co-author, AI acts as Drafter/Editor.
+        - **Workflow:** Admin pastes raw notes/docs -> AI analyzes and drafts structured content -> Admin reviews/edits in Preview Pane -> Save to Knowledge Base.
+        - **UI:** Split-pane layout (Chat Interface + Live Preview).
+        - **Model Selector:** Dropdown to switch models (e.g., GPT-4o for reasoning, Flash for speed) during the session.
+    - **Model Settings:** Global configuration for the *public* visitor chat.
 
 ## 3. Visitor Chat
 - **Interface:** Full-screen chat UI.

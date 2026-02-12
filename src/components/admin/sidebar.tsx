@@ -3,13 +3,23 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { LayoutDashboard, Settings } from 'lucide-react'
+import { LayoutDashboard, Settings, Database, Wand2 } from 'lucide-react'
 
 const sidebarItems = [
   {
     title: 'Dashboard',
     href: '/dashboard',
     icon: LayoutDashboard,
+  },
+  {
+    title: 'Knowledge Base',
+    href: '/knowledge',
+    icon: Database,
+  },
+  {
+    title: 'Improve with AI',
+    href: '/improve',
+    icon: Wand2,
   },
   {
     title: 'AI Settings',
