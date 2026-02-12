@@ -9,12 +9,17 @@
 ## 2. Admin Dashboard
 - **Access:** Restricted to authenticated users (`/(admin)` routes).
 - **Layout:**
-    - Sidebar navigation (Dashboard, AI Settings).
+    - Sidebar navigation (Dashboard, Knowledge Base, Admin Chat, AI Settings).
     - Header with logout button.
     - Mobile-responsive.
 - **Features:**
+    - **Overview:** Dashboard with key metrics (Knowledge Fragments, Chats).
+    - **Knowledge Base:** Manage RAG documents.
+        - **User Content:** Manually created documents (high confidence).
+        - **AI Generated:** Documents derived from other sources (lower confidence, reviewable).
+    - **Admin Chat:** Interface to test the AI agent and preview RAG context.
+        - Split-pane layout: Chat interface + Context Preview.
     - **Model Settings:** Select the AI model for the public chat.
-    - **Profile Management:** Update personal details.
 
 ## 3. Visitor Chat
 - **Interface:** Full-screen chat UI.
