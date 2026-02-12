@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { LayoutDashboard, Settings, Database, MessageSquare } from 'lucide-react'
+import { LayoutDashboard, Settings, Database, Wand2 } from 'lucide-react'
 
 const sidebarItems = [
   {
@@ -17,9 +17,9 @@ const sidebarItems = [
     icon: Database,
   },
   {
-    title: 'Admin Chat',
-    href: '/chat',
-    icon: MessageSquare,
+    title: 'Improve with AI',
+    href: '/improve',
+    icon: Wand2,
   },
   {
     title: 'AI Settings',
