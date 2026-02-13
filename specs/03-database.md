@@ -8,14 +8,18 @@
 - **RLS:** Public read, Owner write.
 - **Columns:**
   - `id` (UUID, PK, FK auth.users)
-  - `full_name` (Text)
+  - `name` (Text, NOT NULL)
   - `avatar_url` (Text)
-  - `profession` (Text)
-  - `experience` (Integer)
-  - `field` (Text)
-  - `welcome_message` (Text)
-  - `professional_summary` (Text)
+  - `profession` (Text, NOT NULL)
+  - `experience` (Integer, Default 0, NOT NULL)
+  - `field` (Text, NOT NULL)
+  - `welcome_message` (Text, NOT NULL)
+  - `professional_summary` (Text, NOT NULL)
   - `updated_at` (Timestamp)
+
+### Automation
+
+- **Removed**: Automatic profile creation trigger `on_auth_user_created` has been removed to enforce manual onboarding and data quality.
 
 ### `system_settings`
 

@@ -21,7 +21,9 @@ export async function getProfile() {
     .single();
 
   if (error) {
-    console.error("Error fetching profile:", error);
+    if (error.code !== "PGRST116") {
+      console.error("Error fetching profile:", error);
+    }
     return null;
   }
 
@@ -40,7 +42,9 @@ export async function getPublicProfile() {
     .single();
 
   if (error) {
-    console.error("Error fetching public profile:", error);
+    if (error.code !== "PGRST116") {
+      console.error("Error fetching public profile:", error);
+    }
     return null;
   }
 
@@ -60,11 +64,13 @@ export async function updateProfile(data: Record<string, any>) {
 
   const { error } = await supabase
     .from("profiles")
-    .update({
+    .upsert({
+      id: user.id,
       ...data,
       updated_at: new Date().toISOString(),
     })
-    .eq("id", user.id);
+    .select()
+    .single();
 
   if (error) {
     console.error("Error updating profile:", error);

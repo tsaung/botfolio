@@ -229,7 +229,13 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
         )}
 
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Updating..." : "Update Profile"}
+          {isSubmitting
+            ? initialData
+              ? "Updating..."
+              : "Creating..."
+            : initialData
+              ? "Update Profile"
+              : "Create Profile"}
         </Button>
       </form>
     </Form>

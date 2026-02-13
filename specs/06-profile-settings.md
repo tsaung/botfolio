@@ -42,4 +42,5 @@ The `profiles` table is being cleaned up to match the UI and remove unused field
 ### `profile`
 
 - `getProfile()`: Returns profile data.
-- `updateProfile(data)`: Updates profile fields.
+- `getProfile()`: Returns profile data.
+- `updateProfile(data)`: Upserts profile data (Creates new if not exists).

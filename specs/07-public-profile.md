@@ -33,8 +33,8 @@ If the user account is created but the profile is incomplete (specifically missi
 
 ### Checklist Steps
 
-1.  **Create Account**: Validated by existence of a profile record.
-2.  **Setup Profile**: Validated by presence of `name` field in profile.
+1.  **Create Account**: Validated by existence of a profile record (or any row in `profiles`).
+2.  **Setup Profile**: Now enforced by `NOT NULL` constraints on `name`, `profession`, etc. If a profile row exists, it is assumed complete enough for display, as partial rows are no longer allowed.
 
 ### UI Reference
 

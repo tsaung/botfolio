@@ -39,6 +39,9 @@ Your goal is to assist the user by writing high-quality, polished UI/UX and robu
 - **Database:** Supabase (PostgreSQL + Vector).
 - **Styling:** Tailwind CSS + Shadcn UI (Use `npx shadcn@latest add`).
 - **Testing:** Vitest/Jest for logic, Playwright for E2E.
+- **Conventions:**
+  - `middleware.ts` is renamed to `proxy.ts` (Next.js 16+ convention).
+  - `proxy.ts` must export a default function named `proxy`.
 
 ## 6. Interaction Style
 

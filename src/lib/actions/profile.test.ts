@@ -2,12 +2,33 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getProfile, updateProfile } from "./profile";
 
 // Mock the server client creation
-const mockSelect = vi.fn();
-const mockUpdate = vi.fn();
-const mockEq = vi.fn();
-const mockSingle = vi.fn();
-const mockFrom = vi.fn();
-const mockGetUser = vi.fn();
+// Mock the server client creation
+const {
+  mockSelect,
+  mockUpdate,
+  mockUpsert,
+  mockEq,
+  mockSingle,
+  mockFrom,
+  mockGetUser,
+} = vi.hoisted(() => {
+  const mockGetUser = vi.fn();
+  const mockSingle = vi.fn();
+  const mockEq = vi.fn();
+  const mockSelect = vi.fn();
+  const mockUpdate = vi.fn();
+  const mockUpsert = vi.fn();
+  const mockFrom = vi.fn();
+  return {
+    mockSelect,
+    mockUpdate,
+    mockUpsert,
+    mockEq,
+    mockSingle,
+    mockFrom,
+    mockGetUser,
+  };
+});
 
 vi.mock("@/lib/db/server", () => ({
   createClient: vi.fn(() => ({
@@ -30,6 +51,7 @@ describe("Profile Server Actions", () => {
     mockFrom.mockReturnValue({
       select: mockSelect,
       update: mockUpdate,
+      upsert: mockUpsert,
     });
     mockSelect.mockReturnValue({
       eq: mockEq,
@@ -39,6 +61,12 @@ describe("Profile Server Actions", () => {
     });
     mockUpdate.mockReturnValue({
       eq: mockEq,
+    });
+    // Upsert chain: upsert -> select -> single
+    mockUpsert.mockReturnValue({
+      select: vi.fn().mockReturnValue({
+        single: mockSingle,
+      }),
     });
   });
 
@@ -132,19 +160,22 @@ describe("Profile Server Actions", () => {
         data: { user: { id: "user-123" } },
         error: null,
       });
-      mockEq.mockResolvedValue({ error: null }); // success for update
+      mockSingle.mockResolvedValue({
+        data: { ...updateData, id: "user-123" },
+        error: null,
+      }); // success for upsert return
 
       const result = await updateProfile(updateData);
 
       expect(mockFrom).toHaveBeenCalledWith("profiles");
-      expect(mockUpdate).toHaveBeenCalledWith(
+      expect(mockUpsert).toHaveBeenCalledWith(
         expect.objectContaining({
+          id: "user-123",
           profession: "Senior Developer",
           experience: "10 years",
-          updated_at: expect.any(String), // We expect a timestamp
+          updated_at: expect.any(String),
         }),
       );
-      expect(mockEq).toHaveBeenCalledWith("id", "user-123");
       expect(result).toEqual({ success: true });
     });
 
@@ -159,7 +190,14 @@ describe("Profile Server Actions", () => {
         data: { user: { id: "user-123" } },
         error: null,
       });
-      mockEq.mockResolvedValue({ error: { message: "Update failed" } });
+      // Mock upsert failure
+      // The chain is upsert -> select -> single. error comes from single() logic in the real client if select fails?
+      // Actually, if upsert fails, it might throw or return error on the chain?
+      // In Supabase js: .upsert().select().single() returns { data, error }
+      mockSingle.mockResolvedValue({
+        data: null,
+        error: { message: "Update failed" },
+      });
 
       await expect(updateProfile({})).rejects.toThrow(
         "Failed to update profile",

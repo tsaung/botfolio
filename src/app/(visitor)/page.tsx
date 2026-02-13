@@ -4,6 +4,7 @@ import { SetupChecklist } from "@/components/visitor/setup-checklist";
 
 export default async function VisitorPage() {
   const profile = await getPublicProfile();
+  console.log("VisitorPage: Profile:", profile);
 
   // Check if profile is ready for public view (needs at least a name)
   const isReady = !!(profile && profile.name);
