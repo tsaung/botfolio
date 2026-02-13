@@ -53,3 +53,8 @@ To maintain a clean and conflict-free history:
 ## 6. Database and Types
 
 - **Type Generation:** Run `npx supabase gen types typescript --local > src/types/database.ts` after any migration to keep TypeScript definitions in sync with the database schema.
+
+## 7. Temporary Files
+
+- **Scratchpad:** If you need to create temporary files (logs, data validation scripts, scratchpad code), **ALWAYS** use the `.ai/temp/` directory.
+- **Git Hygiene:** Do NOT commit files in `.ai/temp/` or any `*.tmp` files.

@@ -48,3 +48,8 @@ Your goal is to assist the user by writing high-quality, polished UI/UX and robu
 - **Be Concise.**
 - **Be Proactive.**
 - **Assume Competence.**
+
+## 7. Temporary Files
+
+- **Scratchpad:** If you need to create temporary files (logs, data validation scripts, scratchpad code), **ALWAYS** use the `.ai/temp/` directory.
+- **Git Hygiene:** Do NOT commit files in `.ai/temp/` or any `*.tmp` files.
