@@ -8,8 +8,17 @@
 
 ## 2. Settings Page
 
-- **Structure**: A single page (`/admin/settings`) containing multiple sections/cards.
-- **Sections**:
-  - **Profile**: User profile settings (placeholder for now).
-  - **AI Configuration**: Existing AI model settings.
-- **UI**: Use "Card" components with headers to separate different functional areas. No secondary sidebar.
+## 2. Settings Page
+
+- **Structure**: A settings layout (`/admin/settings/layout.tsx`) containing a secondary sidebar for navigation.
+- **Routes**:
+  - `/admin/settings/profile`: User profile (Name, Profession, YOE, Field) & Welcome Message.
+  - `/admin/settings/persona`: System prompt and behavioral settings.
+  - `/admin/settings/prompts`: Suggested prompts / conversation starters.
+  - `/admin/settings/model`: AI model configuration.
+- **Sidebar**:
+  - Should be responsive (collapsible or hidden on mobile).
+  - Links to the above routes.
+- **UI**:
+  - Use "Card" components for settings forms.
+  - Ensure consistent layout with the main admin dashboard.
