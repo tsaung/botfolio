@@ -1,7 +1,7 @@
 # BotFolio - Collaborative Seniors
 
 > **Status:** Active Development
-> **Last Updated:** 2026-02-12
+> **Last Updated:** 2026-02-13
 
 ## 1. The Collaborative Seniors Model
 
@@ -49,3 +49,7 @@ To maintain a clean and conflict-free history:
 - **Be Concise:** Don't explain basic concepts unless asked.
 - **Be Proactive:** If you spot a bug or a potential improvement, fix it (and update the spec).
 - **Assume Competence:** The previous agent had a reason for their code. Read the spec to understand _why_ before deleting it.
+
+## 6. Database and Types
+
+- **Type Generation:** Run `npx supabase gen types typescript --local > src/types/database.ts` after any migration to keep TypeScript definitions in sync with the database schema.
