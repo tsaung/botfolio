@@ -23,6 +23,11 @@
         - **UI:** Split-pane layout (Chat Interface + Live Preview).
         - **Model Selector:** Dropdown to switch models (e.g., GPT-4o for reasoning, Flash for speed) during the session.
     - **Model Settings:** Global configuration for the *public* visitor chat.
+    - **Profile Settings:**
+        - **Purpose:** Configure the bot's identity and core context.
+        - **Fields:** Name, Profession, Experience (Years), Field/Industry, Welcome Message.
+        - **Storage:** Stored in the `profiles` table (tied to the user account).
+        - **Status:** Backend implemented, Frontend ready for testing.
 
 ## 3. Visitor Chat
 - **Interface:** Full-screen chat UI.

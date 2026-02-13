@@ -7,6 +7,9 @@
 - [x] **Admin Dashboard Layout**
   - 🚨 Priority: High
   - ℹ️ Context: Implement responsive sidebar, header, and secure `/(admin)` routes. Added Knowledge Base and Admin Chat UI scaffolding.
+- [ ] **Profile Settings**
+  - 🚨 Priority: High
+  - ℹ️ Context: Backend and basic UI implemented. Ready for local testing and polish by Antigravity.
 
 ## Backlog
 

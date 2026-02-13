@@ -3,9 +3,17 @@
 ## Tables
 
 ### `profiles`
-- **Purpose:** Stores user profile information.
+- **Purpose:** Stores user profile information and bot personality context.
 - **RLS:** Public read, Owner write.
-- **Columns:** `id` (FK auth.users), `full_name`, `avatar_url`, ...
+- **Columns:**
+  - `id` (UUID, PK, FK auth.users)
+  - `full_name` (Text)
+  - `avatar_url` (Text)
+  - `profession` (Text)
+  - `experience` (Integer)
+  - `field` (Text)
+  - `welcome_message` (Text)
+  - `updated_at` (Timestamp)
 
 ### `system_settings`
 - **Purpose:** Global configuration (Key-Value store).
