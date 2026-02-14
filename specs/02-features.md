@@ -44,6 +44,8 @@
     - Send button is disabled while AI is "thinking" to prevent double-submission.
     - Input remains enabled for review/editing.
     - **Typing Indicator:** A 3-dot bounce animation appears when the bot is processing/streaming.
+  - **Appearance:**
+    - **Profile Picture:** Displays user's avatar. If not set, defaults to `avatar.jpg` from public folder (instead of generic Bot icon).
   - **Interaction:**
     - **Optimistic UI:** Input field clears immediately upon hitting sending, does not wait for server response.
   - **History:** Chat history persists within the session (no need for long-term persistence yet).
@@ -59,10 +61,13 @@
 
 ## 4. UI/UX
 
-- **Theme Switcher:**
-  - Support for Light, Dark, and System modes.
-  - Persisted via `next-themes`.
-  - Integrated into Public Chat and Admin Header.
+    - **Theme Switcher:**
+      - Support for Light, Dark, and System modes.
+      - Persisted via `next-themes`.
+      - Integrated into Public Chat (Header right) and Admin Header.
+    - **Header:**
+      - **Desktop:** Standard left-aligned title.
+      - **Mobile:** Centered title for app-like feel.Theme switcher remains on the right.
 
 ## 5. Planned Features (The "Brain")
 

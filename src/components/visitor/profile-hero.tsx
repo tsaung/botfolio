@@ -14,8 +14,12 @@ export function ProfileHero({ profile }: ProfileHeroProps) {
   if (!profile) {
     return (
       <div className="flex flex-col items-center justify-center space-y-4 text-center p-8">
-        <div className="p-4 bg-muted rounded-full">
-          <Bot className="w-8 h-8 opacity-50" />
+        <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden border-4 border-muted">
+          <img
+            src="/avatar.jpg"
+            alt="Default Profile"
+            className="object-cover w-full h-full"
+          />
         </div>
         <div className="space-y-2">
           <h2 className="text-2xl font-semibold">Welcome to BotFolio</h2>
@@ -43,7 +47,7 @@ export function ProfileHero({ profile }: ProfileHeroProps) {
     <div className="flex flex-col items-center justify-center space-y-4 text-center pb-8 pt-4">
       <Avatar className="h-20 w-20 border-2 border-primary/20">
         <AvatarImage
-          src={profile.avatar_url || ""}
+          src={profile.avatar_url || "/avatar.jpg"}
           alt={profile.name || "Avatar"}
           className="object-cover"
         />

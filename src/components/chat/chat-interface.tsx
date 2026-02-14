@@ -53,8 +53,8 @@ export function ChatInterface({ profile }: ChatInterfaceProps) {
 
   return (
     <div className="flex flex-col h-[100dvh] max-w-4xl mx-auto border-x bg-background overflow-hidden">
-      <header className="p-4 border-b bg-card flex items-center justify-between shrink-0 z-10">
-        <div>
+      <header className="p-4 border-b bg-card flex items-center justify-between shrink-0 z-10 relative">
+        <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:left-auto">
           {profile ? (
             <div className="flex flex-col justify-center h-full">
               <h1 className="text-lg font-bold tracking-tight">
@@ -68,7 +68,9 @@ export function ChatInterface({ profile }: ChatInterfaceProps) {
             </h1>
           )}
         </div>
-        <ModeToggle />
+        <div className="ml-auto">
+          <ModeToggle />
+        </div>
       </header>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-6 min-h-0 flex flex-col">
