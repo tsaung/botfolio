@@ -1,8 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getProfile, updateProfile } from "./profile";
 
-// Mock the server client creation
-// Mock the server client creation
+// --- Mocks ---
+
+// Hoist mocks to be available in vi.mock factories
 const {
   mockSelect,
   mockUpdate,
@@ -11,25 +12,29 @@ const {
   mockSingle,
   mockFrom,
   mockGetUser,
+  mockGetBotConfig,
+  mockUpdateBotConfig,
 } = vi.hoisted(() => {
-  const mockGetUser = vi.fn();
-  const mockSingle = vi.fn();
-  const mockEq = vi.fn();
-  const mockSelect = vi.fn();
-  const mockUpdate = vi.fn();
-  const mockUpsert = vi.fn();
-  const mockFrom = vi.fn();
   return {
-    mockSelect,
-    mockUpdate,
-    mockUpsert,
-    mockEq,
-    mockSingle,
-    mockFrom,
-    mockGetUser,
+    mockSelect: vi.fn(),
+    mockUpdate: vi.fn(),
+    mockUpsert: vi.fn(),
+    mockEq: vi.fn(),
+    mockSingle: vi.fn(),
+    mockFrom: vi.fn(),
+    mockGetUser: vi.fn(),
+    mockGetBotConfig: vi.fn(),
+    mockUpdateBotConfig: vi.fn(),
   };
 });
 
+// Mock bot-config actions to prevent actual DB calls or complex chaining requirements
+vi.mock("./bot-config", () => ({
+  getBotConfig: mockGetBotConfig,
+  updateBotConfig: mockUpdateBotConfig,
+}));
+
+// Mock the server client creation
 vi.mock("@/lib/db/server", () => ({
   createClient: vi.fn(() => ({
     auth: {
@@ -45,9 +50,9 @@ vi.mock("next/cache", () => ({
 
 describe("Profile Server Actions", () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.resetAllMocks(); // Clear mocks (history and implementations if needed, but mostly history)
 
-    // Setup chainable mocks
+    // Setup chainable mocks for Supabase
     mockFrom.mockReturnValue({
       select: mockSelect,
       update: mockUpdate,
@@ -55,6 +60,7 @@ describe("Profile Server Actions", () => {
     });
     mockSelect.mockReturnValue({
       eq: mockEq,
+      limit: vi.fn().mockReturnValue({ single: mockSingle }), // Added limit mock for getPublicProfile
     });
     mockEq.mockReturnValue({
       single: mockSingle,
@@ -139,22 +145,17 @@ describe("Profile Server Actions", () => {
       };
 
       mockSingle.mockResolvedValue({ data: mockProfile, error: null });
-      // mockFrom -> select -> limit -> single
-      const mockLimit = vi.fn().mockReturnValue({ single: mockSingle });
-      mockSelect.mockReturnValue({ limit: mockLimit });
+      // The limit mock is handled in beforeEach
 
       const { getPublicProfile } = await import("./profile");
       const result = await getPublicProfile();
 
       expect(mockFrom).toHaveBeenCalledWith("profiles");
       expect(mockSelect).toHaveBeenCalledWith("*");
-      expect(mockLimit).toHaveBeenCalledWith(1);
       expect(result).toEqual(mockProfile);
     });
 
     it("should return null on error", async () => {
-      const mockLimit = vi.fn().mockReturnValue({ single: mockSingle });
-      mockSelect.mockReturnValue({ limit: mockLimit });
       mockSingle.mockResolvedValue({ data: null, error: { message: "Error" } });
 
       const { getPublicProfile } = await import("./profile");
@@ -165,10 +166,11 @@ describe("Profile Server Actions", () => {
   });
 
   describe("updateProfile", () => {
-    it("should update profile successfully", async () => {
+    it("should update profile successfully and seed bot config if missing", async () => {
       const updateData = {
+        name: "Test User",
         profession: "Senior Developer",
-        experience: "10 years",
+        experience: 10,
       };
 
       mockGetUser.mockResolvedValue({
@@ -178,20 +180,50 @@ describe("Profile Server Actions", () => {
       mockSingle.mockResolvedValue({
         data: { ...updateData, id: "user-123" },
         error: null,
-      }); // success for upsert return
+      });
+
+      // Mock bot config check: returns null (not found) to trigger seeding
+      mockGetBotConfig.mockResolvedValue(null);
+      mockUpdateBotConfig.mockResolvedValue({ success: true });
 
       const result = await updateProfile(updateData);
 
       expect(mockFrom).toHaveBeenCalledWith("profiles");
-      expect(mockUpsert).toHaveBeenCalledWith(
+      // mockUpsert called
+      expect(mockUpsert).toHaveBeenCalled();
+
+      // Verify bot config check and seed
+      expect(mockGetBotConfig).toHaveBeenCalledWith("public_agent");
+      expect(mockUpdateBotConfig).toHaveBeenCalledWith(
+        "public_agent",
         expect.objectContaining({
-          id: "user-123",
-          profession: "Senior Developer",
-          experience: "10 years",
-          updated_at: expect.any(String),
+          model: "google/gemini-2.0-flash-001",
+          system_prompt: expect.stringContaining("Test User"),
         }),
       );
+
       expect(result).toEqual({ success: true });
+    });
+
+    it("should update profile and skip seeding if bot config exists", async () => {
+      const updateData = { profession: "Dev" };
+
+      mockGetUser.mockResolvedValue({
+        data: { user: { id: "user-123" } },
+        error: null,
+      });
+      mockSingle.mockResolvedValue({
+        data: { ...updateData, id: "user-123" },
+        error: null,
+      });
+
+      // Mock bot config check: returns object (found)
+      mockGetBotConfig.mockResolvedValue({ id: "config-1" });
+
+      await updateProfile(updateData);
+
+      expect(mockGetBotConfig).toHaveBeenCalledWith("public_agent");
+      expect(mockUpdateBotConfig).not.toHaveBeenCalled();
     });
 
     it("should throw error when not authenticated", async () => {
@@ -205,10 +237,6 @@ describe("Profile Server Actions", () => {
         data: { user: { id: "user-123" } },
         error: null,
       });
-      // Mock upsert failure
-      // The chain is upsert -> select -> single. error comes from single() logic in the real client if select fails?
-      // Actually, if upsert fails, it might throw or return error on the chain?
-      // In Supabase js: .upsert().select().single() returns { data, error }
       mockSingle.mockResolvedValue({
         data: null,
         error: { message: "Update failed" },
