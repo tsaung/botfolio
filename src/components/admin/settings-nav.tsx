@@ -55,18 +55,8 @@ export const settingsNavItems = [
     icon: User,
   },
   {
-    title: "Persona",
-    href: "/settings/persona",
+    title: "Bot Configuration",
+    href: "/settings/bot",
     icon: Bot,
-  },
-  {
-    title: "Prompts",
-    href: "/settings/prompts",
-    icon: MessageSquare,
-  },
-  {
-    title: "Model",
-    href: "/settings/model",
-    icon: Cpu,
   },
 ];

@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/db/server";
 import { revalidatePath } from "next/cache";
+import { updateBotConfig, getBotConfig } from "./bot-config";
 
 export async function getProfile() {
   const supabase = await createClient();
@@ -78,6 +79,26 @@ export async function updateProfile(data: Record<string, any>) {
   if (error) {
     console.error("Error updating profile:", error);
     throw new Error("Failed to update profile");
+  }
+
+  // Check if bot config exists, if not, create default
+  try {
+    const botConfig = await getBotConfig("public_agent");
+    if (!botConfig) {
+      await updateBotConfig("public_agent", {
+        model: "google/gemini-2.0-flash-001",
+        provider: "openrouter",
+        system_prompt: `You are ${data.name}'s Portfolio Assistant. You are a helpful assistant that answers questions about their work and experience.`,
+        predefined_prompts: [
+          "Tell me about your experience",
+          "What are your skills?",
+          "Contact information",
+          "Tell me about your projects",
+        ],
+      });
+    }
+  } catch (err) {
+    console.error("Error managing bot config:", err);
   }
 
   revalidatePath("/settings/profile");
