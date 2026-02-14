@@ -93,6 +93,7 @@ export async function updateProfile(data: Record<string, any>) {
           "Tell me about your experience",
           "What are your skills?",
           "Contact information",
+          "Tell me about your projects",
         ],
       });
     }

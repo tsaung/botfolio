@@ -45,7 +45,7 @@ export function AdminLayoutWrapper({
   return (
     <div
       className={cn(
-        "grid h-screen w-full transition-all duration-300 overflow-hidden",
+        "grid fixed inset-0 w-full transition-all duration-300 overflow-hidden",
         isCollapsed ? "lg:grid-cols-[60px_1fr]" : "lg:grid-cols-[280px_1fr]",
       )}
     >

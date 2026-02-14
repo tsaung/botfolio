@@ -51,7 +51,10 @@ interface BotConfigFormProps {
 }
 
 const AVAILABLE_MODELS = [
-  { value: "google/gemini-2.0-flash-001", label: "Gemini 2.0 Flash (Recommended)" },
+  {
+    value: "google/gemini-2.0-flash-001",
+    label: "Gemini 2.0 Flash (Recommended)",
+  },
   { value: "openai/gpt-4o-mini", label: "GPT-4o Mini" },
   { value: "anthropic/claude-3-haiku", label: "Claude 3 Haiku" },
 ];
@@ -188,8 +191,9 @@ export function BotConfigForm({ initialData, type }: BotConfigFormProps) {
                 </FormControl>
                 <FormDescription>
                   This serves as the "brain" of your bot. You can use
-                  placeholders like {"{name}"}, {"{profession}"}, {"{experience}"},
-                  and {"{field}"} which will be replaced by your profile data.
+                  placeholders like {"{name}"}, {"{profession}"},{" "}
+                  {"{experience}"}, and {"{field}"} which will be replaced by
+                  your profile data.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
