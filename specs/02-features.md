@@ -59,6 +59,7 @@
 - **Backend:**
   - Uses Vercel AI SDK (`streamText`) with OpenRouter.
   - Connects to the user-selected model.
+  - **RAG Retrieval:** On each message, the user's query is embedded via `gemini-embedding-001` (`RETRIEVAL_QUERY` task type), then matched against `knowledge_chunks` using pgvector cosine similarity. Top-K results are injected into the system prompt.
 
 ## 4. UI/UX
 

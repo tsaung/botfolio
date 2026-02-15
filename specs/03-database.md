@@ -59,7 +59,7 @@
 ### `knowledge_chunks`
 
 - **Purpose:** Stores derived vector embeddings for similarity search (RAG retrieval).
-- **Embedding Model:** `google/gemini-embedding-001` via OpenRouter, 1536 dimensions.
+- **Embedding Model:** `google/gemini-embedding-001` via Google AI Studio, 1536 dimensions.
 - **Extension:** Requires `vector` (pgvector).
 - **RLS:** Owner full CRUD. Public read (needed for visitor RAG queries).
 - **Columns:**
@@ -79,6 +79,10 @@
 - **Pattern:** Next.js `after()` in server actions schedules chunking + embedding after response is sent.
 - **Flow:** `createDocument`/`updateDocument` → `after(() => processDocument(...))` → delete old chunks → chunk text → `embedMany()` via `@ai-sdk/google` → insert via `adminClient`.
 - **Idempotent:** Old chunks are always deleted before new ones are inserted.
+
+### RPC Functions
+
+- **`match_knowledge_chunks(query_embedding, match_count, match_threshold)`**: pgvector cosine similarity search. Joins with `knowledge_documents` to only return chunks from `active` documents. Security definer (bypasses RLS for visitor queries). Returns `id`, `document_id`, `content`, `chunk_index`, `similarity`.
 
 ## Future Schema (Planned)
 
