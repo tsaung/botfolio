@@ -32,3 +32,15 @@
 - **Provider**: Currently locked to OpenRouter (disabled dropdown).
 - **System Prompt**: Supports `{name}`, `{profession}`, `{experience}`, `{field}` placeholders interpolated at runtime.
 - **Predefined Prompts**: Up to 4 quick-reply suggestions shown to visitors in the chat.
+
+## 3. Knowledge Base Page (`/knowledge`)
+
+- **Purpose**: CRUD interface for managing RAG knowledge documents.
+- **Layout**: Table listing documents with Title, Type, Last Updated, and Actions columns.
+- **Features**:
+  - **Search**: Client-side filter by document title.
+  - **Create** (`/knowledge/new`): Full-page form with Title (Input) and Content (large Textarea), Zod validation.
+  - **Edit** (`/knowledge/[id]/edit`): Same form pre-filled with existing document data (server-fetched).
+  - **Delete**: Confirmation dialog on list page, hard-deletes document and cascades to chunks.
+- **Data Flow**: Server Component fetches documents → passes to client `KnowledgeList` component.
+- **Status**: Implemented (Phase 1 — manual documents only).

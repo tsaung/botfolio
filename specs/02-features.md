@@ -16,7 +16,9 @@
   - Mobile-responsive.
 - **Features:**
   - **Overview:** Dashboard with key metrics (Knowledge Fragments, Chats).
-  - **Knowledge Base:** Manage RAG documents (user-provided content only in Phase 1).
+  - **Knowledge Base:** CRUD for RAG documents (user-provided content). Create/Edit via full-page form, delete with confirmation. Phase 1: manual documents only.
+    - **Auto-Processing:** On create/update, documents are automatically chunked and embedded in the background via Next.js `after()`.
+    - **Status:** Implemented.
   - **Bot Settings (Public Agent):**
     - **Purpose:** Configure the public-facing portfolio assistant.
     - **Unified Form:** Single interface to manage:
@@ -79,6 +81,6 @@
   - **UI:** Split-pane layout (Chat Interface + Live Preview).
   - **Model Selector:** Dropdown to switch models during the session.
 - **AI-Generated Knowledge:** Documents derived from other sources (lower confidence, reviewable). Adds "AI Generated" tab and "Source" column to Knowledge Base.
-- **RAG Pipeline:** Vectorize documents (Markdown/Text) for retrieval.
+- **RAG Pipeline:** ~~Vectorize documents (Markdown/Text) for retrieval.~~ → **Implemented** (automatic chunking + embedding via `gemini-embedding-001`).
 - **Enrichment Agent:** An "Admin Agent" that helps the owner generate high-quality RAG documents.
 - **Generative UI:** Dynamic widgets (`streamUI`) for project cards and contact forms.

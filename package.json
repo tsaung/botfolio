@@ -12,6 +12,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.29",
     "@ai-sdk/openai": "^3.0.26",
     "@ai-sdk/react": "^3.0.80",
     "@hookform/resolvers": "^5.2.2",

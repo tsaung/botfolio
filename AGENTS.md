@@ -59,7 +59,17 @@ To maintain a clean and conflict-free history:
 
 - **Type Generation:** Run `npx supabase gen types typescript --local > src/types/database.ts` after any migration to keep TypeScript definitions in sync with the database schema.
 
-## 7. Temporary Files
+## 7. RAG Pipeline
+
+- **Location:** `src/lib/rag/` — chunker, embedder, and pipeline modules.
+- **Embedding Model:** `gemini-embedding-001` via `@ai-sdk/google` (`embedMany` from Vercel AI SDK). 1536 dimensions.
+- **API Key:** `GOOGLE_GENERATIVE_AI_API_KEY` (separate from OpenRouter).
+- **Chunking:** Recursive text splitting (~500 tokens/chunk, ~50 token overlap).
+- **Background Processing:** Uses Next.js `after()` in server actions — response returns immediately, chunking + embedding runs in background.
+- **Storage:** `knowledge_chunks` table via `adminClient` (service role, bypasses RLS).
+- **Task Types:** `RETRIEVAL_DOCUMENT` for storing chunks, `RETRIEVAL_QUERY` for searching.
+
+## 8. Temporary Files
 
 - **Scratchpad:** If you need to create temporary files (logs, data validation scripts, scratchpad code), **ALWAYS** use the `.ai/temp/` directory.
 - **Git Hygiene:** Do NOT commit files in `.ai/temp/` or any `*.tmp` files.
