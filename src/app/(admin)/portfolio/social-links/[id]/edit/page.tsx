@@ -1,0 +1,22 @@
+import { notFound } from "next/navigation";
+import { getSocialLink } from "@/lib/actions/social-links";
+import { SocialLinkForm } from "@/components/admin/portfolio/social-link-form";
+
+interface EditSocialLinkPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function EditSocialLinkPage({
+  params,
+}: EditSocialLinkPageProps) {
+  const { id } = await params;
+  const link = await getSocialLink(id);
+
+  if (!link) {
+    notFound();
+  }
+
+  return <SocialLinkForm initialData={link} />;
+}

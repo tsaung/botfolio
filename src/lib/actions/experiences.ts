@@ -35,10 +35,37 @@ export async function getExperiences(): Promise<Experience[]> {
   }
 
   return data ?? [];
+  return data ?? [];
+}
+
+export async function getExperience(id: string): Promise<Experience | null> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+  if (authError || !user) {
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from("experiences")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching experience:", error);
+    return null;
+  }
+
+  return data;
 }
 
 export async function createExperience(
-  input: ExperienceInsert,
+  input: Omit<ExperienceInsert, "user_id">,
 ): Promise<Experience> {
   const supabase = await createClient();
 

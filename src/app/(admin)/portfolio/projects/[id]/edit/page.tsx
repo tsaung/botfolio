@@ -1,0 +1,22 @@
+import { notFound } from "next/navigation";
+import { getProject } from "@/lib/actions/projects";
+import { ProjectForm } from "@/components/admin/portfolio/project-form";
+
+interface EditProjectPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function EditProjectPage({
+  params,
+}: EditProjectPageProps) {
+  const { id } = await params;
+  const project = await getProject(id);
+
+  if (!project) {
+    notFound();
+  }
+
+  return <ProjectForm initialData={project} />;
+}

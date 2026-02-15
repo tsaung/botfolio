@@ -44,3 +44,50 @@
   - **Delete**: Confirmation dialog on list page, hard-deletes document and cascades to chunks.
 - **Data Flow**: Server Component fetches documents → passes to client `KnowledgeList` component.
 - **Status**: Implemented (Phase 1 — manual documents only).
+
+## 4. Portfolio Management (`/portfolio`)
+
+- **Purpose**: Central hub for managing portfolio content (Projects, Experiences, Skills, Social Links).
+- **Structure**:
+  - `/portfolio`: Overview page with quick stats and links to sub-sections.
+  - `/portfolio/projects`: CRUD + Reordering for Projects.
+  - `/portfolio/experiences`: CRUD + Reordering for Experiences.
+  - `/portfolio/skills`: CRUD + Reordering for Skills.
+  - `/portfolio/social-links`: CRUD + Reordering for Social Links.
+
+### 4.1 Projects (`/portfolio/projects`)
+
+- **List View**:
+  - Columns: Title, Technologies (tags), Status (Badge), Actions.
+  - **Reordering**: Drag-and-drop or Up/Down buttons to update `sort_order`.
+  - **Status Badge**: Published (Green), Draft (Yellow), Archived (Gray).
+- **Create/Edit Form**:
+  - Fields: Title, Slug, Tagline (short), Description (Rich Text/Markdown), Technologies (Array/Tag Input), Demo URL, Repo URL, Image URL.
+  - Status: Dropdown/Radio (published, draft, archived).
+  - Feature: "Featured Project" toggle (boolean).
+
+### 4.2 Experiences (`/portfolio/experiences`)
+
+- **List View**:
+  - Columns: Company, Role, Date Range, Actions.
+  - Reordering supported.
+- **Create/Edit Form**:
+  - Fields: Company, Position, Location, Start Date, End Date (Current/Present checkbox), Description.
+  - Logic: If "Current" is checked, `end_date` is null.
+
+### 4.3 Skills (`/portfolio/skills`)
+
+- **List View**:
+  - Columns: Name, Category, Proficiency, Actions.
+  - Reordering supported.
+- **Create/Edit Form**:
+  - Fields: Name, Category (Frontend, Backend, etc.), Proficiency (1-5 or 0-100), Icon (optional).
+  - Proficiency UI: Visual slider or star rating.
+
+### 4.4 Social Links (`/portfolio/social-links`)
+
+- **List View**:
+  - Columns: Platform, URL, Actions.
+  - Reordering supported.
+- **Create/Edit Form**:
+  - Fields: Platform (GitHub, LinkedIn, etc.), URL, Icon (Lucide icon name string).

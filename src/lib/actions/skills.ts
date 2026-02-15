@@ -35,9 +35,38 @@ export async function getSkills(): Promise<Skill[]> {
   }
 
   return data ?? [];
+  return data ?? [];
 }
 
-export async function createSkill(input: SkillInsert): Promise<Skill> {
+export async function getSkill(id: string): Promise<Skill | null> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+  if (authError || !user) {
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from("skills")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching skill:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function createSkill(
+  input: Omit<SkillInsert, "user_id">,
+): Promise<Skill> {
   const supabase = await createClient();
 
   const {

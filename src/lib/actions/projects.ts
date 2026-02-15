@@ -63,7 +63,9 @@ export async function getProject(id: string): Promise<Project | null> {
   return data;
 }
 
-export async function createProject(input: ProjectInsert): Promise<Project> {
+export async function createProject(
+  input: Omit<ProjectInsert, "user_id">,
+): Promise<Project> {
   const supabase = await createClient();
 
   const {
