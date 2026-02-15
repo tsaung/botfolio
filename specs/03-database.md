@@ -74,6 +74,72 @@
   - `created_at` (Timestamptz)
 - **Indexes:** HNSW on `embedding` (vector_cosine_ops), B-tree on `user_id`.
 
+### `projects`
+
+- **Purpose:** Stores portfolio projects.
+- **RLS:** Public read, Owner write.
+- **Columns:**
+  - `id` (UUID, PK)
+  - `user_id` (UUID, FK auth.users, ON DELETE CASCADE)
+  - `title` (Text, NOT NULL)
+  - `description` (Text)
+  - `image_url` (Text)
+  - `live_url` (Text)
+  - `repo_url` (Text)
+  - `tags` (Text[])
+  - `sort_order` (Integer, Default 0)
+  - `status` (Text, Default 'published', Check: 'published'/'draft'/'archived')
+  - `created_at` (Timestamptz)
+  - `updated_at` (Timestamptz)
+- **Indexes:** B-tree on `user_id`.
+
+### `experiences`
+
+- **Purpose:** Stores work history.
+- **RLS:** Public read, Owner write.
+- **Columns:**
+  - `id` (UUID, PK)
+  - `user_id` (UUID, FK auth.users, ON DELETE CASCADE)
+  - `title` (Text, NOT NULL)
+  - `company` (Text, NOT NULL)
+  - `location` (Text)
+  - `start_date` (Date, NOT NULL)
+  - `end_date` (Date, Nullable)
+  - `description` (Text)
+  - `sort_order` (Integer, Default 0)
+  - `created_at` (Timestamptz)
+  - `updated_at` (Timestamptz)
+- **Indexes:** B-tree on `user_id`.
+
+### `skills`
+
+- **Purpose:** Stores technical skills.
+- **RLS:** Public read, Owner write.
+- **Columns:**
+  - `id` (UUID, PK)
+  - `user_id` (UUID, FK auth.users, ON DELETE CASCADE)
+  - `name` (Text, NOT NULL)
+  - `category` (Text, NOT NULL)
+  - `proficiency` (Integer, Check: 1-5)
+  - `sort_order` (Integer, Default 0)
+  - `created_at` (Timestamptz)
+  - `updated_at` (Timestamptz)
+- **Indexes:** B-tree on `user_id`.
+
+### `social_links`
+
+- **Purpose:** Stores social media links.
+- **RLS:** Public read, Owner write.
+- **Columns:**
+  - `id` (UUID, PK)
+  - `user_id` (UUID, FK auth.users, ON DELETE CASCADE)
+  - `platform` (Text, NOT NULL)
+  - `url` (Text, NOT NULL)
+  - `sort_order` (Integer, Default 0)
+  - `created_at` (Timestamptz)
+  - `updated_at` (Timestamptz)
+- **Indexes:** B-tree on `user_id`.
+
 ### Background Processing
 
 - **Pattern:** Next.js `after()` in server actions schedules chunking + embedding after response is sent.
