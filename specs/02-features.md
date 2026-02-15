@@ -31,6 +31,15 @@
     - **Fields:** Name, Profession, Experience (Years), Field/Industry, Welcome Message.
     - **Storage:** Stored in the `profiles` table (tied to the user account).
     - **Status:** Backend implemented, Frontend ready for testing.
+  - **Portfolio Management:**
+    - **Purpose:** Manage portfolio content (`projects`, `experiences`, `skills`, `social_links`).
+    - **Actions:**
+      - **Projects:** Title, Description, Image/Live/Repo URLs, Tags, Status (Published/Draft/Archived).
+      - **Experiences:** Title, Company, Location, Start/End Date, Description.
+      - **Skills:** Name, Category, Proficiency (1-5).
+      - **Social Links:** Platform, URL.
+    - **Features:** Reorder items via drag-and-drop (updates `sort_order`), CRUD operations.
+    - **Status:** Backend actions being implemented.
 
 ## 3. Visitor Chat
 
