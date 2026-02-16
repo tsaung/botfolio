@@ -86,11 +86,43 @@ export function ProfileHero({
         </AvatarFallback>
       </Avatar>
 
-      <div className="space-y-4 max-w-2xl px-4">
+      <div className="space-y-6 max-w-2xl px-4 flex flex-col items-center">
         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
           {profile.name}
         </h1>
 
+        {/* Social Links */}
+        {socialLinks.length > 0 && (
+          <div className="flex items-center gap-4">
+            {socialLinks.map((link) => (
+              <Button
+                key={link.id}
+                variant="ghost"
+                size="icon"
+                asChild
+                className="rounded-full hover:bg-muted/80 hover:scale-110 transition-all"
+              >
+                <Link href={link.url} target="_blank" rel="noopener noreferrer">
+                  {getSocialIcon(link.platform)}
+                  <span className="sr-only">{link.platform}</span>
+                </Link>
+              </Button>
+            ))}
+          </div>
+        )}
+
+        {/* Welcome Message */}
+        {profile.welcome_message && (
+          <p className="text-muted-foreground text-lg leading-relaxed max-w-lg mx-auto">
+            {profile.welcome_message
+              .replace("{name}", profile.name || "")
+              .replace("{profession}", profile.profession || "")
+              .replace("{experience}", String(profile.experience || ""))
+              .replace("{field}", profile.field || "")}
+          </p>
+        )}
+
+        {/* Tech Stack Icons */}
         {(() => {
           const topSkills = skills
             .filter((s) => (s.proficiency ?? 0) >= 4)
@@ -98,7 +130,7 @@ export function ProfileHero({
 
           if (topSkills.length > 0) {
             return (
-              <div className="flex flex-wrap items-center justify-center gap-4 py-2 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+              <div className="flex flex-wrap items-center justify-center gap-4 py-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
                 {topSkills.map((skill) => (
                   <div
                     key={skill.id}
@@ -117,41 +149,12 @@ export function ProfileHero({
           }
 
           return profile.profession ? (
-            <p className="text-xl md:text-2xl font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <p className="text-xl md:text-2xl font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent pt-2">
               {profile.profession}
             </p>
           ) : null;
         })()}
-
-        {profile.welcome_message && (
-          <p className="text-muted-foreground text-lg leading-relaxed pt-2 max-w-lg mx-auto">
-            {profile.welcome_message
-              .replace("{name}", profile.name || "")
-              .replace("{profession}", profile.profession || "")
-              .replace("{experience}", String(profile.experience || ""))
-              .replace("{field}", profile.field || "")}
-          </p>
-        )}
       </div>
-
-      {socialLinks.length > 0 && (
-        <div className="flex items-center gap-4 pt-4">
-          {socialLinks.map((link) => (
-            <Button
-              key={link.id}
-              variant="ghost"
-              size="icon"
-              asChild
-              className="rounded-full hover:bg-muted/80 hover:scale-110 transition-all"
-            >
-              <Link href={link.url} target="_blank" rel="noopener noreferrer">
-                {getSocialIcon(link.platform)}
-                <span className="sr-only">{link.platform}</span>
-              </Link>
-            </Button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
