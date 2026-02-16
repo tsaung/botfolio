@@ -2,7 +2,7 @@
 
 **BotFolio** is an AI-native portfolio platform that "interviews" for you. It combines a structured portfolio with an AI-powered chat assistant backed by RAG (Retrieval Augmented Generation) to answer questions about your experience, projects, and skills accurately.
 
-> **Status:** Active Development
+> **Version:** 1.0
 > **Stack:** Next.js (App Router), Supabase, Vercel AI SDK, Shadcn UI, Tailwind CSS
 
 ## Features
@@ -15,6 +15,8 @@
 - **Knowledge Base** — CRUD for RAG documents with automatic background processing via Next.js `after()`.
 - **Authentication** — Secure Email/Password login with Supabase Auth (invite-only).
 - **Theme Switcher** — Light, Dark, and System modes across all views.
+
+> **☁️ Want to deploy without local setup?** See [DEPLOY.md](DEPLOY.md) for a step-by-step cloud deployment guide.
 
 ## Getting Started
 

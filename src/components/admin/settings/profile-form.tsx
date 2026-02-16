@@ -69,7 +69,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
     field: initialData?.field || "",
     welcomeMessage:
       initialData?.welcome_message ||
-      "I'm {name}, a {profession} with over {experience} years of experience in {field}. This is my personal AI assistant—feel free to ask it anything about my work or background.",
+      "I'm {name}, a {profession} with over {experience} years of experience in {field}.",
     chatWelcomeMessage:
       initialData?.chat_welcome_message ||
       "Hello! I am {name}'s AI assistant. How can I help you today?",

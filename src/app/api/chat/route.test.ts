@@ -3,20 +3,10 @@ import { POST } from "./route";
 import { streamText } from "ai";
 
 // Define references to access mocks in tests
-const { mockFrom, mockSelect, mockLimit, mockEq, mockSingle } = vi.hoisted(
-  () => {
-    const mockSingle = vi.fn();
-    const mockEq = vi.fn().mockReturnValue({ single: mockSingle });
-    const mockLimit = vi
-      .fn()
-      .mockReturnValue({ single: mockSingle, eq: mockEq });
-    const mockSelect = vi
-      .fn()
-      .mockReturnValue({ eq: mockEq, limit: mockLimit });
-    const mockFrom = vi.fn().mockReturnValue({ select: mockSelect });
-    return { mockFrom, mockSelect, mockLimit, mockEq, mockSingle };
-  },
-);
+const { mockFrom } = vi.hoisted(() => {
+  const mockFrom = vi.fn();
+  return { mockFrom };
+});
 
 // Mock Supabase admin client
 vi.mock("@/lib/db/admin", () => ({
@@ -44,21 +34,34 @@ vi.mock("ai", () => ({
   pipeUIMessageStreamToResponse: vi.fn(),
 }));
 
+// Helper to create a mock Supabase query chain
+function createMockChain(resolvedValue: unknown) {
+  const chain: Record<string, unknown> = {};
+  const resolver = () => Promise.resolve(resolvedValue);
+  // Each method returns the chain itself, except terminal methods
+  chain.select = vi.fn().mockReturnValue(chain);
+  chain.eq = vi.fn().mockReturnValue(chain);
+  chain.limit = vi.fn().mockReturnValue(chain);
+  chain.order = vi.fn().mockReturnValue(chain);
+  chain.single = vi.fn().mockImplementation(resolver);
+  // Make chain itself thenable for Promise.all (non-single queries)
+  chain.then = (resolve: (v: unknown) => void) => resolver().then(resolve);
+  return chain;
+}
+
 describe("POST /api/chat", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockFrom.mockReturnValue({ select: mockSelect });
-    mockSelect.mockReturnValue({ eq: mockEq, limit: mockLimit });
-    mockEq.mockReturnValue({ single: mockSingle, limit: mockLimit });
-    mockLimit.mockReturnValue({ single: mockSingle, eq: mockEq });
   });
 
   it("should use the default model when no bot_configs row is found", async () => {
-    // Mock: bot_configs returns null, profiles returns null
-    mockSingle.mockResolvedValue({
+    const errorResult = {
       data: null,
       error: { code: "PGRST116", message: "Not found" },
-    });
+    };
+
+    // All tables return null/error
+    mockFrom.mockImplementation(() => createMockChain(errorResult));
 
     const req = {
       json: vi
@@ -77,12 +80,9 @@ describe("POST /api/chat", () => {
   });
 
   it("should use the configured model and system prompt from bot_configs", async () => {
-    let callCount = 0;
-    mockSingle.mockImplementation(() => {
-      callCount++;
-      if (callCount === 1) {
-        // bot_configs query
-        return Promise.resolve({
+    mockFrom.mockImplementation((table: string) => {
+      if (table === "bot_configs") {
+        return createMockChain({
           data: {
             model: "openai/gpt-4o",
             system_prompt:
@@ -92,17 +92,27 @@ describe("POST /api/chat", () => {
           error: null,
         });
       }
-      // profiles query
-      return Promise.resolve({
-        data: {
-          name: "Thant Sin",
-          profession: "Software Engineer",
-          experience: 5,
-          field: "Web Development",
-          professional_summary: "Experienced developer.",
-        },
-        error: null,
-      });
+      if (table === "profiles") {
+        return createMockChain({
+          data: {
+            id: "user-1",
+            name: "Thant Sin",
+            profession: "Software Engineer",
+            experience: 5,
+            field: "Web Development",
+            professional_summary: "Experienced developer.",
+          },
+          error: null,
+        });
+      }
+      if (table === "social_links") {
+        return createMockChain({
+          data: [{ platform: "GitHub", url: "https://github.com/tsaung" }],
+          error: null,
+        });
+      }
+      // knowledge_chunks / rpc fallback
+      return createMockChain({ data: [], error: null });
     });
 
     const req = {

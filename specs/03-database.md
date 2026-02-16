@@ -15,6 +15,7 @@
   - `field` (Text, NOT NULL)
   - `welcome_message` (Text, NOT NULL)
   - `professional_summary` (Text, NOT NULL)
+  - `chat_welcome_message` (Text, Nullable)
   - `updated_at` (Timestamp)
 
 ### `bot_configs`
