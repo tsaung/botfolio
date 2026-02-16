@@ -5,9 +5,16 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ModeToggle } from "@/components/mode-toggle";
 
-export function VisitorNav({ name }: { name?: string | null }) {
+export function VisitorNav({
+  name,
+  avatarUrl,
+}: {
+  name?: string | null;
+  avatarUrl?: string | null;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -48,13 +55,23 @@ export function VisitorNav({ name }: { name?: string | null }) {
       )}
     >
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link
-          href="/"
-          className="text-lg font-bold tracking-tight hover:opacity-80 transition-opacity"
-          onClick={(e) => scrollToSection(e, "about")}
-        >
-          {name || "BotFolio"}
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            onClick={(e) => scrollToSection(e, "about")}
+          >
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={avatarUrl || "/avatar.jpg"} />
+              <AvatarFallback>
+                {name?.slice(0, 2).toUpperCase() || "BF"}
+              </AvatarFallback>
+            </Avatar>
+            <span className="text-lg font-bold tracking-tight">
+              {name || "BotFolio"}
+            </span>
+          </Link>
+        </div>
 
         <div className="flex items-center gap-4">
           {/* Desktop Nav */}
