@@ -36,6 +36,12 @@ const profileFormSchema = z.object({
   welcomeMessage: z.string().max(300, {
     message: "Welcome message must not be longer than 300 characters.",
   }),
+  chatWelcomeMessage: z
+    .string()
+    .max(300, {
+      message: "Chat welcome message must not be longer than 300 characters.",
+    })
+    .optional(),
   professionalSummary: z.string().min(10, {
     message: "Professional summary must be at least 10 characters.",
   }),
@@ -64,6 +70,9 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
     welcomeMessage:
       initialData?.welcome_message ||
       "I'm {name}, a {profession} with over {experience} years of experience in {field}. This is my personal AI assistant—feel free to ask it anything about my work or background.",
+    chatWelcomeMessage:
+      initialData?.chat_welcome_message ||
+      "Hello! I am {name}'s AI assistant. How can I help you today?",
     professionalSummary:
       initialData?.professional_summary ||
       "I'm {name}, a {profession} with over {experience} years of experience in {field}.",
@@ -87,6 +96,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
         experience: data.experience,
         field: data.field,
         welcome_message: data.welcomeMessage,
+        chat_welcome_message: data.chatWelcomeMessage,
         professional_summary: data.professionalSummary,
       });
       setSuccessMessage("Profile updated successfully!");
@@ -200,7 +210,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
           name="welcomeMessage"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Welcome Message Template</FormLabel>
+              <FormLabel>Home Page Welcome Message</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Hi, I'm {name}..."
@@ -209,8 +219,28 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
                 />
               </FormControl>
               <FormDescription>
-                You can use placeholders like {"{name}"}, {"{profession}"},
-                {"{experience}"}, and {"{field}"}.
+                Displayed on the main landing page.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="chatWelcomeMessage"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Chat Bot Welcome Message</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Hello! I am {name}'s AI assistant..."
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                Displayed as the first message in the chat interface. A default
+                will be used if left empty.
               </FormDescription>
               <FormMessage />
             </FormItem>

@@ -34,7 +34,7 @@ type Skill = Database["public"]["Tables"]["skills"]["Row"];
 const skillSchema = z.object({
   name: z.string().min(1, "Name is required"),
   category: z.string().min(1, "Category is required"),
-  proficiency: z.number().min(0).max(100),
+  proficiency: z.number().min(1).max(5),
 });
 
 type SkillFormValues = z.infer<typeof skillSchema>;
@@ -62,7 +62,7 @@ export function SkillForm({ initialData }: SkillFormProps) {
     defaultValues: {
       name: initialData?.name ?? "",
       category: initialData?.category ?? "",
-      proficiency: initialData?.proficiency ?? 50,
+      proficiency: initialData?.proficiency ?? 3,
     },
   });
 

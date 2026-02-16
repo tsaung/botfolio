@@ -49,7 +49,11 @@ export default async function VisitorPage() {
           id="about"
           className="min-h-[60vh] flex flex-col justify-center"
         >
-          <ProfileHero profile={profile} socialLinks={socialLinks} />
+          <ProfileHero
+            profile={profile}
+            socialLinks={socialLinks}
+            skills={skills}
+          />
         </section>
 
         {/* Projects Section */}

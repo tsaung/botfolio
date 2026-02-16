@@ -58,7 +58,10 @@ export function VisitorNav({
         <div className="flex items-center gap-2">
           <Link
             href="/"
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            className={cn(
+              "flex items-center gap-2 hover:opacity-80 transition-all duration-300",
+              !scrolled && "opacity-0 -translate-x-4 pointer-events-none",
+            )}
             onClick={(e) => scrollToSection(e, "about")}
           >
             <Avatar className="h-8 w-8">

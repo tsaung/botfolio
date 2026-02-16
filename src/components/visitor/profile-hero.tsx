@@ -11,15 +11,23 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
+import { TechIcon } from "@/components/portfolio/tech-icons";
+
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 type SocialLink = Database["public"]["Tables"]["social_links"]["Row"];
+type Skill = Database["public"]["Tables"]["skills"]["Row"];
 
 interface ProfileHeroProps {
   profile: Profile | null;
   socialLinks?: SocialLink[];
+  skills?: Skill[];
 }
 
-export function ProfileHero({ profile, socialLinks = [] }: ProfileHeroProps) {
+export function ProfileHero({
+  profile,
+  socialLinks = [],
+  skills = [],
+}: ProfileHeroProps) {
   if (!profile) {
     return (
       <div className="flex flex-col items-center justify-center space-y-4 text-center p-8 min-h-[50vh]">
@@ -78,17 +86,45 @@ export function ProfileHero({ profile, socialLinks = [] }: ProfileHeroProps) {
         </AvatarFallback>
       </Avatar>
 
-      <div className="space-y-2 max-w-2xl px-4">
+      <div className="space-y-4 max-w-2xl px-4">
         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
           {profile.name}
         </h1>
-        {profile.profession && (
-          <p className="text-xl md:text-2xl font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-            {profile.profession}
-          </p>
-        )}
+
+        {(() => {
+          const topSkills = skills
+            .filter((s) => (s.proficiency ?? 0) >= 4)
+            .slice(0, 6);
+
+          if (topSkills.length > 0) {
+            return (
+              <div className="flex flex-wrap items-center justify-center gap-4 py-2 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+                {topSkills.map((skill) => (
+                  <div
+                    key={skill.id}
+                    className="flex flex-col items-center gap-1 group"
+                  >
+                    <div className="p-3 bg-secondary/30 rounded-2xl group-hover:bg-secondary/60 transition-colors">
+                      <TechIcon name={skill.name} className="w-8 h-8" />
+                    </div>
+                    <span className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6">
+                      {skill.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            );
+          }
+
+          return profile.profession ? (
+            <p className="text-xl md:text-2xl font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              {profile.profession}
+            </p>
+          ) : null;
+        })()}
+
         {profile.welcome_message && (
-          <p className="text-muted-foreground text-lg leading-relaxed pt-2">
+          <p className="text-muted-foreground text-lg leading-relaxed pt-2 max-w-lg mx-auto">
             {profile.welcome_message
               .replace("{name}", profile.name || "")
               .replace("{profession}", profile.profession || "")
