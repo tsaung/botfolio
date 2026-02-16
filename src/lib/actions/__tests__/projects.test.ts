@@ -46,6 +46,17 @@ vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),
 }));
 
+vi.mock("next/server", () => ({
+  after: vi.fn((fn: () => void) => fn()),
+}));
+
+vi.mock("@/lib/rag/portfolio-sync", () => ({
+  syncProjectsToKnowledge: vi.fn(),
+  syncExperiencesToKnowledge: vi.fn(),
+  syncSkillsToKnowledge: vi.fn(),
+  syncAllPortfolioData: vi.fn(),
+}));
+
 describe("Projects Server Actions", () => {
   beforeEach(() => {
     vi.resetAllMocks();

@@ -22,6 +22,7 @@ interface ChatInterfaceProps {
   input: string;
   setInput: (value: string) => void;
   onSend: (e?: React.FormEvent) => Promise<void>;
+  onSendDirect?: (text: string) => Promise<void>;
   isLoading: boolean;
   onClose?: () => void;
 }
@@ -33,6 +34,7 @@ export function ChatInterface({
   input = "",
   setInput,
   onSend,
+  onSendDirect,
   isLoading,
   onClose,
 }: ChatInterfaceProps) {
@@ -43,33 +45,11 @@ export function ChatInterface({
   }, [messages]);
 
   const handlePromptClick = async (prompt: string) => {
-    setInput(prompt);
-    // Short timeout to allow state update before sending
-    // Alternatively, we could expose a method to send immediate text,
-    // but updating input and letting user send or handling it upstream is safer.
-    // Actually, in the previous implementation, handlePromptClick called sendMessage({ text: prompt }).
-    // We should probably allow onSend to take a string or use a separate handler.
-    // For now, let's just update input and maybe auto-send?
-    // Better: Helper in FloatingChat to send specific text?
-    // Or just set input and leave it to user?
-    // User's snippet: onClick={() => handlePromptClick(prompt)} -> await sendMessage({ text: prompt })
-
-    // Since we don't have direct access to append here anymore (only onSend which uses current input),
-    // we need a way to send specific text.
-    // Let's modify onSend to accept optional text override?
-    // Or just setInput and return?
-
-    // Let's change onSend signature in FloatingChat?
-    // No, let's keep it simple. We can't easily auto-send if we only have onSend(e).
-    // Let's just set the input for now.
-
-    // Wait, the user wants "like before".
-    // Before: handlePromptClick called sendMessage directly.
-    // We can't do that easily unless we pass `append` down.
-    // But we passed `onSend`.
-
-    // Let's stick to updating input for now to avoid breaking changes in FloatingChat again.
-    setInput(prompt);
+    if (onSendDirect) {
+      await onSendDirect(prompt);
+    } else {
+      setInput(prompt);
+    }
   };
 
   const onFormSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {

@@ -1,39 +1,34 @@
-# AutoFolio Tasks
+# BotFolio Tasks
 
 > **Status:** Active Development
-> **Last Updated:** 2026-02-13
+> **Last Updated:** 2026-02-16
 
-## Active
+## Completed
 
-- [x] **Admin Dashboard Layout**
-  - 🚨 Priority: High
-  - ℹ️ Context: Implement responsive sidebar, header, and secure `/(admin)` routes. Added Knowledge Base and Admin Chat UI scaffolding.
-- [x] **Profile Settings**
-  - 🚨 Priority: High
-  - ℹ️ Context: Backend and basic UI implemented. Ready for local testing and polish by Antigravity.
-- [x] **Public Profile View**
-  - 🚨 Priority: High
-  - ℹ️ Context: Fetch and display profile data on the main landing page.
+- [x] **Authentication** — Email/Password login via Supabase Auth.
+- [x] **Admin Dashboard** — Responsive sidebar, header, protected routes.
+- [x] **Profile Settings** — Backend + UI for managing identity/context.
+- [x] **Bot Settings** — Model, system prompt, and predefined prompts config.
+- [x] **Knowledge Base** — CRUD for RAG documents with auto-chunking & embedding.
+- [x] **RAG Pipeline** — Embedding via `gemini-embedding-001`, pgvector retrieval.
+- [x] **Public Chat** — Visitor chat with streaming AI, markdown, typing indicator.
+- [x] **Portfolio CMS** — Projects, Experiences, Skills, Social Links CRUD with reordering.
+- [x] **Visitor Portfolio** — Structured portfolio page with Hero, Projects Grid, Experience Timeline, Skills Grid.
+- [x] **Floating Chat** — Sheet-based chat FAB on the portfolio page.
+- [x] **Portfolio → RAG Sync** — Auto-sync structured data to knowledge base via `after()`.
+- [x] **Social Links in Chat** — LLM has access to contact/social links at chat time.
+- [x] **Theme Switcher** — Light/Dark/System modes across all views.
 
 ## Backlog
 
-### Phase 2: RAG & Enrichment
+### Phase 2: AI Enrichment
 
-- [ ] **Profile Enrichment Chat (The Logic)**
-  - 🚨 Priority: Medium
-  - ℹ️ Context: Implement the "Admin Agent" using Vercel AI SDK Core to generate RAG docs. Connect to `/admin/chat`.
-- [ ] **RAG Pipeline Implementation**
-  - 🚨 Priority: Medium
-  - ℹ️ Context: Vectorize documents and implement retrieval logic. Connect to `/admin/knowledge`.
+- [ ] **Improve with AI (Content Studio)** — Interactive canvas for AI-assisted RAG content generation.
+- [ ] **AI-Generated Knowledge** — Lower-confidence docs from AI, reviewable by admin.
+- [ ] **Enrichment Agent** — Admin agent for generating high-quality RAG documents.
 
 ### Phase 3: Polish & Deployment
 
-- [ ] **Generative UI Widgets**
-  - 🚨 Priority: Low
-  - ℹ️ Context: Implement `streamUI` for Project Cards and Contact Forms.
-- [ ] **SEO & Metadata**
-  - 🚨 Priority: Low
-  - ℹ️ Context: Add OpenGraph tags and metadata.
-- [ ] **Deployment to Vercel**
-  - 🚨 Priority: Low
-  - ℹ️ Context: Deploy the application.
+- [ ] **Generative UI Widgets** — `streamUI` for Project Cards and Contact Forms.
+- [ ] **SEO & Metadata** — OpenGraph tags and metadata.
+- [ ] **Deployment to Vercel** — Production deployment.

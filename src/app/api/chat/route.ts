@@ -75,22 +75,38 @@ export async function POST(req: Request) {
     );
   }
 
-  // 2. Fetch User Profile for Context
-  const { data: profile } = await adminClient
-    .from("profiles")
-    .select("*")
-    .limit(1)
-    .single();
+  // 2. Fetch User Profile + Social Links for Context
+  const [profileResult, socialLinksResult] = await Promise.all([
+    adminClient.from("profiles").select("*").limit(1).single(),
+    adminClient
+      .from("social_links")
+      .select("platform, url")
+      .order("sort_order", { ascending: true }),
+  ]);
 
-  const profileContext = profile
-    ? [
-        `Name: ${profile.name ?? "Unknown"}`,
-        `Profession: ${profile.profession ?? "Unknown"}`,
-        `Years of Experience: ${profile.experience ?? "Unknown"}`,
-        `Field: ${profile.field ?? "Unknown"}`,
-        `Professional Summary: ${profile.professional_summary ?? "Not available."}`,
-      ].join("\n")
-    : "";
+  const profile = profileResult.data;
+  const socialLinks = socialLinksResult.data;
+
+  const profileParts: string[] = [];
+  if (profile) {
+    profileParts.push(
+      `Name: ${profile.name ?? "Unknown"}`,
+      `Profession: ${profile.profession ?? "Unknown"}`,
+      `Years of Experience: ${profile.experience ?? "Unknown"}`,
+      `Field: ${profile.field ?? "Unknown"}`,
+      `Professional Summary: ${profile.professional_summary ?? "Not available."}`,
+    );
+  }
+  if (socialLinks && socialLinks.length > 0) {
+    profileParts.push(
+      `\nContact & Social Links:`,
+      ...socialLinks.map(
+        (l: { platform: string; url: string }) => `- ${l.platform}: ${l.url}`,
+      ),
+    );
+  }
+
+  const profileContext = profileParts.join("\n");
 
   // 3. RAG Retrieval — find relevant knowledge chunks for the user's latest message
   const latestUserMsg = [...messages]

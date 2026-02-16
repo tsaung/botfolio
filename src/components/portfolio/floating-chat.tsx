@@ -75,6 +75,9 @@ export function FloatingChat({ profile, botConfig }: FloatingChatProps) {
               input={input}
               setInput={setInput}
               onSend={handleSendMessage}
+              onSendDirect={async (text: string) => {
+                await sendMessage({ text });
+              }}
               isLoading={status === "submitted" || status === "streaming"}
               onClose={() => setOpen(false)}
             />

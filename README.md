@@ -1,24 +1,27 @@
 # BotFolio
 
-**BotFolio** is an AI-native portfolio platform that "interviews" for you. It combines a sleek, modern chat interface with RAG (Retrieval Augmented Generation) to answer questions about your experience, projects, and skills accurately.
+**BotFolio** is an AI-native portfolio platform that "interviews" for you. It combines a structured portfolio with an AI-powered chat assistant backed by RAG (Retrieval Augmented Generation) to answer questions about your experience, projects, and skills accurately.
 
 > **Status:** Active Development
-> **Stack:** Next.js, Supabase, Vercel AI SDK, Shadcn UI
+> **Stack:** Next.js (App Router), Supabase, Vercel AI SDK, Shadcn UI, Tailwind CSS
 
 ## Features
 
-- **Authentication:** Secure Email/Password login with Supabase Auth.
-- **Visitor Chat:** A conversational interface for recruiters and clients (Planned).
-- **Generative UI:** The AI renders rich components (Project Cards, Contact Forms) in the chat (Planned).
-- **Admin Dashboard:** Manage your profile and documents (Planned).
-- **Profile Enrichment:** Chat with the AI to generate RAG-optimized summaries of your experience (Planned).
+- **Structured Portfolio** — Hero section, Projects grid, Experience timeline, Skills grid, Social links.
+- **AI Chat Assistant** — Floating chat FAB with streaming responses, markdown rendering, and typing indicator.
+- **RAG Pipeline** — Automatic chunking & embedding via `gemini-embedding-001` with pgvector cosine similarity retrieval.
+- **Portfolio → RAG Sync** — Structured portfolio data auto-syncs to the knowledge base for better AI answers.
+- **Admin Dashboard** — Manage profile, portfolio content, knowledge base, and bot settings.
+- **Knowledge Base** — CRUD for RAG documents with automatic background processing via Next.js `after()`.
+- **Authentication** — Secure Email/Password login with Supabase Auth (invite-only).
+- **Theme Switcher** — Light, Dark, and System modes across all views.
 
 ## Getting Started
 
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/botfolio.git
+    git clone https://github.com/tsaung/botfolio.git
     cd botfolio
     ```
 
@@ -45,13 +48,10 @@
       ```
 
 4.  **Start Local Supabase:**
-    This project uses a custom port configuration (643xx) to avoid conflicts with other local Supabase projects.
 
     ```bash
     npx supabase start
     ```
-
-    _Note: The API URL and Keys will be output to the terminal after the start command finishes._
 
     If this is your first time or need to reset the database:
 
@@ -66,9 +66,13 @@
 
 ## Project Structure
 
-- `app/(visitor)`: Public facing chat interface.
-- `app/(admin)`: Protected admin dashboard.
-- `app/(auth)`: Authentication pages (Login, Reset Password).
-- `lib/ai`: Vercel AI SDK configurations.
-- `lib/db`: Supabase client (Server/Client/Middleware).
-- `supabase/migrations`: Database schema definitions.
+- `app/(visitor)` — Public portfolio page + floating AI chat.
+- `app/(admin)` — Protected admin dashboard (profile, portfolio, knowledge base, settings).
+- `app/(auth)` — Authentication pages (Login, Reset Password).
+- `app/api/chat` — AI chat API route with RAG retrieval.
+- `lib/actions` — Server actions for all CRUD operations.
+- `lib/rag` — RAG pipeline (chunking, embedding, portfolio sync).
+- `lib/db` — Supabase clients (Server/Client/Admin).
+- `components/` — Reusable UI components.
+- `specs/` — Living documentation and specifications.
+- `supabase/migrations` — Database schema definitions.

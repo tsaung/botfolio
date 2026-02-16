@@ -49,7 +49,7 @@
   - `user_id` (UUID, FK auth.users, ON DELETE CASCADE)
   - `title` (Text, NOT NULL)
   - `content` (Text, NOT NULL)
-  - `type` (Text, NOT NULL, Check: `'manual'`, `'ai_generated'`)
+  - `type` (Text, NOT NULL, Check: `'manual'`, `'ai_generated'`, `'auto_generated'`)
   - `metadata` (JSONB)
   - `status` (Text, NOT NULL, Default `'active'`, Check: `'active'`, `'archived'`)
   - `created_at` (Timestamptz)

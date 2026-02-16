@@ -35,7 +35,6 @@ export async function getSocialLinks(): Promise<SocialLink[]> {
   }
 
   return data ?? [];
-  return data ?? [];
 }
 
 export async function getSocialLink(id: string): Promise<SocialLink | null> {

@@ -112,3 +112,4 @@ The `ChatInterface` component is reused within the floating sheet/dialog.
 - **API**: `POST /api/chat`
 - **Config**: Uses `public_agent` from `bot_configs`.
 - **Context**: Interpolates profile placeholders (`{name}`, `{profession}`, etc.).
+- **Social Links**: Queried from DB at chat time and appended to the system prompt as contact info (not RAG-synced).
