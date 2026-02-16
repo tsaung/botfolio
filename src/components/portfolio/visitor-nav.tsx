@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export function VisitorNav({ name }: { name?: string | null }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,29 +56,33 @@ export function VisitorNav({ name }: { name?: string | null }) {
           {name || "BotFolio"}
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-6">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => scrollToSection(e, link.href.replace("#", ""))}
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        <div className="flex items-center gap-4">
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex gap-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => scrollToSection(e, link.href.replace("#", ""))}
+                className="text-sm font-medium hover:text-primary transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
 
-        {/* Mobile Nav Toggle */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
+          <ModeToggle />
+
+          {/* Mobile Nav Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </div>
       </div>
 
       {/* Mobile Nav Menu */}

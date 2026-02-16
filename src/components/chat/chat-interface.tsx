@@ -8,7 +8,6 @@ import { useEffect, useRef } from "react";
 import { Send, Bot, User, Sparkles, X } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { cn } from "@/lib/utils";
-import { ModeToggle } from "@/components/mode-toggle";
 import { ProfileHero } from "@/components/visitor/profile-hero";
 import { Database } from "@/types/database";
 import { ChatRequestOptions } from "ai";
@@ -99,7 +98,6 @@ export function ChatInterface({
         </div>
 
         <div className="flex items-center gap-2">
-          <ModeToggle />
           {onClose && (
             <Button
               variant="ghost"
@@ -153,9 +151,7 @@ export function ChatInterface({
                   </>
                 ) : (
                   <>
-                    <AvatarImage
-                      src={profile?.avatar_url || "/bot-avatar.png"}
-                    />
+                    <AvatarImage src={profile?.avatar_url || "/avatar.jpg"} />
                     <AvatarFallback className="bg-muted">
                       <Bot className="w-4 h-4" />
                     </AvatarFallback>
