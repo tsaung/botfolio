@@ -62,6 +62,15 @@ The visitor experience will be transformed from a simple chat interface to a com
 - **State**: Persist chat state if possible, or reset on close (acceptable for v1).
 - **Impl**: `FloatingChat` component.
 
+### 7. Footer
+
+- **Content**:
+  - Social Links (Larger icons, brand color).
+  - Copyright Notice.
+  - BotFolio Credit.
+- **Design**: Centered, minimal, `bg-muted/30`.
+- **Impl**: `VisitorFooter` component.
+
 ## Data Fetching
 
 - **Server Component**: `src/app/(visitor)/page.tsx`.

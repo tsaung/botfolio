@@ -13,6 +13,9 @@ import { SkillsGrid } from "@/components/portfolio/skills-grid";
 import { FloatingChat } from "@/components/portfolio/floating-chat";
 import { Separator } from "@/components/ui/separator";
 import { VisitorNav } from "@/components/portfolio/visitor-nav";
+import { ScrollRestoration } from "@/components/portfolio/scroll-restoration";
+
+import { VisitorFooter } from "@/components/portfolio/visitor-footer";
 
 export default async function VisitorPage() {
   const profile = await getPublicProfile();
@@ -40,10 +43,11 @@ export default async function VisitorPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground scroll-smooth">
+    <main className="min-h-screen bg-background text-foreground flex flex-col">
+      <ScrollRestoration />
       <VisitorNav name={profile?.name} avatarUrl={profile?.avatar_url} />
 
-      <div className="container mx-auto px-4 pb-24 space-y-24 pt-16">
+      <div className="container mx-auto px-4 pb-24 space-y-24 pt-16 flex-grow">
         {/* Hero Section */}
         <section
           id="about"
@@ -90,6 +94,7 @@ export default async function VisitorPage() {
         )}
       </div>
 
+      <VisitorFooter profile={profile} socialLinks={socialLinks} />
       <FloatingChat profile={profile} botConfig={botConfig} />
     </main>
   );
