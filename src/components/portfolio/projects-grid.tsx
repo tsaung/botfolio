@@ -44,7 +44,7 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
                 <img
                   src={project.image_url}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <div className="flex items-center justify-center w-full h-full text-muted-foreground bg-muted/50">
