@@ -125,8 +125,14 @@ export function ChatInterface({
               <div className="bg-card/50 backdrop-blur-sm border rounded-2xl p-6 text-center shadow-sm max-w-md animate-in slide-in-from-bottom-5 duration-500">
                 <p className="text-lg font-medium leading-relaxed text-foreground/90">
                   {/* @ts-ignore - column added but types might be lagging */}
-                  {profile?.chat_welcome_message ||
-                    `Hello! I am ${profile?.name?.split(" ")[0] || "an"} AI assistant. How can I help you today?`}
+                  {profile?.chat_welcome_message
+                    ? profile.chat_welcome_message.replace(
+                        "{name}",
+                        profile.name || "User",
+                      )
+                    : `Hello! I am ${
+                        profile?.name?.split(" ")[0] || "an"
+                      } AI assistant. How can I help you today?`}
                 </p>
               </div>
 

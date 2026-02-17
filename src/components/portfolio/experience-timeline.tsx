@@ -14,7 +14,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
   }
 
   return (
-    <div className="relative border-l border-border ml-3 space-y-10">
+    <div className="relative border-l-2 border-muted/50 ml-3 space-y-12">
       {experiences.map((experience) => {
         const startDate = experience.start_date
           ? format(new Date(experience.start_date), "MMM yyyy")
@@ -24,34 +24,38 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
           : "Present";
 
         return (
-          <div key={experience.id} className="mb-10 ml-6">
-            <span className="absolute flex items-center justify-center w-6 h-6 bg-primary/10 rounded-full -left-3 ring-8 ring-background">
-              <Briefcase className="w-3 h-3 text-primary" />
-            </span>
-            <div className="p-4 bg-card border border-border rounded-lg shadow-sm">
-              <div className="justify-between items-center mb-3 sm:flex">
-                <time className="mb-1 text-xs font-normal text-muted-foreground sm:order-last sm:mb-0 flex items-center">
-                  <Calendar className="w-3 h-3 mr-1" />
-                  {startDate} - {endDate}
-                  {experience.location && (
-                    <span className="ml-3 flex items-center">
-                      <MapPin className="w-3 h-3 mr-1" />
-                      {experience.location}
-                    </span>
-                  )}
-                </time>
-                <div className="text-sm font-normal text-muted-foreground flex">
-                  <h3 className="text-lg font-semibold text-foreground">
-                    {experience.title}
-                  </h3>
-                  <span className="text-base font-medium text-primary block">
-                    @{experience.company}
+          <div key={experience.id} className="relative pl-8 md:pl-10 group">
+            {/* Timeline Dot */}
+            <span className="absolute top-0 left-[-9px] flex items-center justify-center w-[18px] h-[18px] bg-background border-4 border-muted rounded-full group-hover:border-primary transition-colors duration-300 ring-4 ring-background" />
+
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+              <h3 className="text-xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
+                {experience.title}
+              </h3>
+              <time className="text-sm font-mono font-medium text-muted-foreground whitespace-nowrap">
+                {startDate} — {endDate}
+              </time>
+            </div>
+
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-base font-semibold text-foreground/80">
+                {experience.company}
+              </span>
+              {experience.location && (
+                <>
+                  <span className="text-muted-foreground/40">•</span>
+                  <span className="text-sm text-muted-foreground flex items-center">
+                    <MapPin className="w-3.5 h-3.5 mr-1" />
+                    {experience.location}
                   </span>
-                </div>
-              </div>
-              <div className="p-3 text-xs italic font-normal text-muted-foreground border border-border rounded-lg bg-muted">
+                </>
+              )}
+            </div>
+
+            <div className="relative p-5 bg-card/50 hover:bg-card border border-border/50 hover:border-primary/20 rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+              <p className="text-muted-foreground leading-relaxed text-[15px]">
                 {experience.description}
-              </div>
+              </p>
             </div>
           </div>
         );
