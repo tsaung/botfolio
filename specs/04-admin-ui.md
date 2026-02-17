@@ -49,9 +49,14 @@
 ## 4. Portfolio Management
 
 - **Purpose**: Manage portfolio content (Projects, Experiences, Skills, Social Links).
-- **Access**: Via the consolidated Dashboard, which shows counts and quick-add buttons.
+- **Access**: Via the consolidated Dashboard, which shows:
+  - **Projects**: Count, Link to list, "Add Project" button (links to `/projects/new`).
+  - **Experiences**: Count, Link to list, "Add Experience" button (links to `/experiences/new`).
+  - **Skills**: Count, Link to list, "Quick Add" dialog.
+  - **Social Links**: Count, Link to list, "Quick Add" dialog.
+  - **Knowledge Base**: Count of documents/fragments, "Add Document" button (links to `/knowledge/new`).
 - **Structure** (routes under `/(admin)`):
-  - `/dashboard`: Overview page with portfolio item counts, quick-add dialogs for Skills and Social Links, and links to each section.
+  - `/dashboard`: Overview page with portfolio item counts, quick-add dialogs/links for all items, and knowledge base stats.
   - `/projects`: CRUD + Reordering for Projects.
   - `/experiences`: CRUD + Reordering for Experiences.
   - `/skills`: CRUD + Reordering for Skills.

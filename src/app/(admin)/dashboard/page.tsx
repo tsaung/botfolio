@@ -13,17 +13,25 @@ import {
   FolderKanban,
   Share2,
   ArrowRight,
+  Plus,
 } from "lucide-react";
 import { createClient } from "@/lib/db/server";
 import Link from "next/link";
 import { QuickAddSkillDialog } from "@/components/admin/dashboard/quick-add-skill-dialog";
 import { QuickAddSocialDialog } from "@/components/admin/dashboard/quick-add-social-dialog";
+import { buttonVariants } from "@/components/ui/button";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
 
   // Fetch counts
-  const tables = ["projects", "experiences", "skills", "social_links"];
+  const tables = [
+    "projects",
+    "experiences",
+    "skills",
+    "social_links",
+    "knowledge_documents",
+  ];
   const counts: Record<string, number> = {};
 
   await Promise.all(
@@ -49,12 +57,23 @@ export default async function DashboardPage() {
             <p className="text-xs text-muted-foreground mb-4">
               Showcased projects
             </p>
-            <Link
-              href="/projects"
-              className="text-xs text-primary flex items-center hover:underline"
-            >
-              Manage Projects <ArrowRight className="ml-1 h-3 w-3" />
-            </Link>
+            <div className="flex items-center justify-between">
+              <Link
+                href="/projects"
+                className="text-xs text-primary flex items-center hover:underline"
+              >
+                Manage Projects <ArrowRight className="ml-1 h-3 w-3" />
+              </Link>
+              <Link
+                href="/projects/new"
+                className={
+                  buttonVariants({ variant: "outline", size: "sm" }) +
+                  " h-7 text-xs"
+                }
+              >
+                <Plus className="mr-1 h-3 w-3" /> Add
+              </Link>
+            </div>
           </CardContent>
         </Card>
 
@@ -69,12 +88,23 @@ export default async function DashboardPage() {
             <p className="text-xs text-muted-foreground mb-4">
               Work history items
             </p>
-            <Link
-              href="/experiences"
-              className="text-xs text-primary flex items-center hover:underline"
-            >
-              Manage Experiences <ArrowRight className="ml-1 h-3 w-3" />
-            </Link>
+            <div className="flex items-center justify-between">
+              <Link
+                href="/experiences"
+                className="text-xs text-primary flex items-center hover:underline"
+              >
+                Manage Experiences <ArrowRight className="ml-1 h-3 w-3" />
+              </Link>
+              <Link
+                href="/experiences/new"
+                className={
+                  buttonVariants({ variant: "outline", size: "sm" }) +
+                  " h-7 text-xs"
+                }
+              >
+                <Plus className="mr-1 h-3 w-3" /> Add
+              </Link>
+            </div>
           </CardContent>
         </Card>
 
@@ -147,10 +177,29 @@ export default async function DashboardPage() {
             <FileText className="h-8 w-8 text-violet-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0</div>
-            <p className="text-xs text-muted-foreground">
-              Add documents to your knowledge base.
+            <div className="text-2xl font-bold">
+              {counts.knowledge_documents}
+            </div>
+            <p className="text-xs text-muted-foreground mb-4">
+              Indexed documents
             </p>
+            <div className="flex items-center justify-between">
+              <Link
+                href="/knowledge"
+                className="text-xs text-primary flex items-center hover:underline"
+              >
+                Manage <ArrowRight className="ml-1 h-3 w-3" />
+              </Link>
+              <Link
+                href="/knowledge/new"
+                className={
+                  buttonVariants({ variant: "outline", size: "sm" }) +
+                  " h-7 text-xs"
+                }
+              >
+                <Plus className="mr-1 h-3 w-3" /> Add
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </div>
