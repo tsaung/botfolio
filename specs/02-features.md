@@ -11,11 +11,11 @@
 
 - **Access:** Restricted to authenticated users (`/(admin)` routes).
 - **Layout:**
-  - Sidebar navigation (Dashboard, Knowledge Base, Settings).
+  - Sidebar navigation (Dashboard, Knowledge Base, Settings). Portfolio items are accessed from the Dashboard.
   - Header with logout button.
   - Mobile-responsive.
 - **Features:**
-  - **Overview:** Dashboard with key metrics (Knowledge Fragments, Chats).
+  - **Overview:** Consolidated dashboard with portfolio item counts (Projects, Experiences, Skills, Social Links), Knowledge Fragments, and Chats. Quick-add dialogs for Skills and Social Links.
   - **Knowledge Base:** CRUD for RAG documents (user-provided content). Create/Edit via full-page form, delete with confirmation. Phase 1: manual documents only.
     - **Auto-Processing:** On create/update, documents are automatically chunked and embedded in the background via Next.js `after()`.
     - **Status:** Implemented.
@@ -39,7 +39,8 @@
       - **Skills:** Name, Category, Proficiency (1-5).
       - **Social Links:** Platform, URL.
     - **Features:** Reorder items via drag-and-drop (updates `sort_order`), CRUD operations.
-    - **Status:** Backend actions being implemented.
+    - **Routes:** Portfolio sub-routes are at the admin root level (`/projects`, `/experiences`, `/skills`, `/social-links`).
+    - **Status:** Implemented.
 
 ## 3. Visitor Chat
 

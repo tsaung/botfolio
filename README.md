@@ -69,7 +69,7 @@
 ## Project Structure
 
 - `app/(visitor)` — Public portfolio page + floating AI chat.
-- `app/(admin)` — Protected admin dashboard (profile, portfolio, knowledge base, settings).
+- `app/(admin)` — Protected admin dashboard, portfolio management (projects, experiences, skills, social-links), knowledge base, settings.
 - `app/(auth)` — Authentication pages (Login, Reset Password).
 - `app/api/chat` — AI chat API route with RAG retrieval.
 - `lib/actions` — Server actions for all CRUD operations.

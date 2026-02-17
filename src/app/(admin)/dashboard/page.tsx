@@ -5,17 +5,132 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { FileText, MessageSquare } from "lucide-react";
+import {
+  FileText,
+  MessageSquare,
+  Briefcase,
+  Code2,
+  FolderKanban,
+  Share2,
+  ArrowRight,
+} from "lucide-react";
+import { createClient } from "@/lib/db/server";
+import Link from "next/link";
+import { QuickAddSkillDialog } from "@/components/admin/dashboard/quick-add-skill-dialog";
+import { QuickAddSocialDialog } from "@/components/admin/dashboard/quick-add-social-dialog";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const supabase = await createClient();
+
+  // Fetch counts
+  const tables = ["projects", "experiences", "skills", "social_links"];
+  const counts: Record<string, number> = {};
+
+  await Promise.all(
+    tables.map(async (table) => {
+      const { count } = await supabase
+        .from(table)
+        .select("*", { count: "exact", head: true });
+      counts[table] = count || 0;
+    }),
+  );
+
   return (
     <div className="flex flex-1 flex-col gap-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {/* Projects */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Projects</CardTitle>
+            <FolderKanban className="h-8 w-8 text-blue-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{counts.projects}</div>
+            <p className="text-xs text-muted-foreground mb-4">
+              Showcased projects
+            </p>
+            <Link
+              href="/projects"
+              className="text-xs text-primary flex items-center hover:underline"
+            >
+              Manage Projects <ArrowRight className="ml-1 h-3 w-3" />
+            </Link>
+          </CardContent>
+        </Card>
+
+        {/* Experiences */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Experiences</CardTitle>
+            <Briefcase className="h-8 w-8 text-orange-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{counts.experiences}</div>
+            <p className="text-xs text-muted-foreground mb-4">
+              Work history items
+            </p>
+            <Link
+              href="/experiences"
+              className="text-xs text-primary flex items-center hover:underline"
+            >
+              Manage Experiences <ArrowRight className="ml-1 h-3 w-3" />
+            </Link>
+          </CardContent>
+        </Card>
+
+        {/* Skills */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Skills</CardTitle>
+            <Code2 className="h-8 w-8 text-emerald-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{counts.skills}</div>
+            <p className="text-xs text-muted-foreground mb-4">
+              Technical skills
+            </p>
+            <div className="flex items-center justify-between">
+              <Link
+                href="/skills"
+                className="text-xs text-primary flex items-center hover:underline"
+              >
+                Manage <ArrowRight className="ml-1 h-3 w-3" />
+              </Link>
+              <QuickAddSkillDialog />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Social Links */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Social Links</CardTitle>
+            <Share2 className="h-8 w-8 text-pink-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{counts.social_links}</div>
+            <p className="text-xs text-muted-foreground mb-4">
+              External profiles
+            </p>
+            <div className="flex items-center justify-between">
+              <Link
+                href="/social-links"
+                className="text-xs text-primary flex items-center hover:underline"
+              >
+                Manage <ArrowRight className="ml-1 h-3 w-3" />
+              </Link>
+              <QuickAddSocialDialog />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-2">
         {/* Total Chats */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Chats</CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
+            <MessageSquare className="h-8 w-8 text-indigo-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">0</div>
@@ -29,7 +144,7 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium">
               Knowledge Fragments
             </CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
+            <FileText className="h-8 w-8 text-violet-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">0</div>

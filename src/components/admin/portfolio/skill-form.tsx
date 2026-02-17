@@ -90,7 +90,7 @@ export function SkillForm({
         onSuccess();
         router.refresh();
       } else {
-        router.push("/portfolio/skills");
+        router.push("/skills");
         router.refresh();
       }
     } catch (error) {

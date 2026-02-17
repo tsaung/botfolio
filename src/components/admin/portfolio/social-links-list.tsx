@@ -194,7 +194,7 @@ export function SocialLinksList({ initialLinks }: SocialLinksListProps) {
                         size="icon"
                         className="h-8 w-8"
                         onClick={() =>
-                          router.push(`/portfolio/social-links/${link.id}/edit`)
+                          router.push(`/social-links/${link.id}/edit`)
                         }
                       >
                         <Pencil className="h-4 w-4" />

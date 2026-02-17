@@ -6,6 +6,7 @@
 - **State**: The collapsed state should be persisted (e.g., in localStorage) so the user preference is remembered.
 - **Responsiveness**: The sidebar is hidden on mobile and shown on desktop (lg breakpoint). On mobile, it should be accessible via a hamburger menu (already implemented in header?).
 - **Navigation Items**: Dashboard, Knowledge Base, Settings.
+  - Portfolio items (Projects, Experiences, Skills, Social Links) are accessed from the Dashboard, not from the sidebar.
   - **Phase 2:** "Improve with AI" will be added back. The page (`/improve`) is scaffolded but hidden from navigation.
 
 ## 2. Settings Page
@@ -45,17 +46,18 @@
 - **Data Flow**: Server Component fetches documents → passes to client `KnowledgeList` component.
 - **Status**: Implemented (Phase 1 — manual documents only).
 
-## 4. Portfolio Management (`/portfolio`)
+## 4. Portfolio Management
 
-- **Purpose**: Central hub for managing portfolio content (Projects, Experiences, Skills, Social Links).
-- **Structure**:
-  - `/portfolio`: Overview page with quick stats and links to sub-sections.
-  - `/portfolio/projects`: CRUD + Reordering for Projects.
-  - `/portfolio/experiences`: CRUD + Reordering for Experiences.
-  - `/portfolio/skills`: CRUD + Reordering for Skills.
-  - `/portfolio/social-links`: CRUD + Reordering for Social Links.
+- **Purpose**: Manage portfolio content (Projects, Experiences, Skills, Social Links).
+- **Access**: Via the consolidated Dashboard, which shows counts and quick-add buttons.
+- **Structure** (routes under `/(admin)`):
+  - `/dashboard`: Overview page with portfolio item counts, quick-add dialogs for Skills and Social Links, and links to each section.
+  - `/projects`: CRUD + Reordering for Projects.
+  - `/experiences`: CRUD + Reordering for Experiences.
+  - `/skills`: CRUD + Reordering for Skills.
+  - `/social-links`: CRUD + Reordering for Social Links.
 
-### 4.1 Projects (`/portfolio/projects`)
+### 4.1 Projects (`/projects`)
 
 - **List View**:
   - Columns: Title, Technologies (tags), Status (Badge), Actions.
@@ -66,7 +68,7 @@
   - Status: Dropdown/Radio (published, draft, archived).
   - Feature: "Featured Project" toggle (boolean).
 
-### 4.2 Experiences (`/portfolio/experiences`)
+### 4.2 Experiences (`/experiences`)
 
 - **List View**:
   - Columns: Company, Role, Date Range, Actions.
@@ -75,7 +77,7 @@
   - Fields: Company, Position, Location, Start Date, End Date (Current/Present checkbox), Description.
   - Logic: If "Current" is checked, `end_date` is null.
 
-### 4.3 Skills (`/portfolio/skills`)
+### 4.3 Skills (`/skills`)
 
 - **List View**:
   - Columns: Name, Category, Proficiency, Actions.
@@ -84,7 +86,7 @@
   - Fields: Name, Category (Frontend, Backend, etc.), Proficiency (1-5 or 0-100), Icon (optional).
   - Proficiency UI: Visual slider or star rating.
 
-### 4.4 Social Links (`/portfolio/social-links`)
+### 4.4 Social Links (`/social-links`)
 
 - **List View**:
   - Columns: Platform, URL, Actions.

@@ -112,7 +112,7 @@ export function ExperiencesList({ initialExperiences }: ExperiencesListProps) {
             Manage your work history and professional roles.
           </p>
         </div>
-        <Button onClick={() => router.push("/portfolio/experiences/new")}>
+        <Button onClick={() => router.push("/experiences/new")}>
           <Plus className="mr-2 h-4 w-4" />
           Add Experience
         </Button>
@@ -218,9 +218,7 @@ export function ExperiencesList({ initialExperiences }: ExperiencesListProps) {
                         size="icon"
                         className="h-8 w-8"
                         onClick={() =>
-                          router.push(
-                            `/portfolio/experiences/${experience.id}/edit`,
-                          )
+                          router.push(`/experiences/${experience.id}/edit`)
                         }
                       >
                         <Pencil className="h-4 w-4" />

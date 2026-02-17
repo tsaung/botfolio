@@ -110,7 +110,7 @@ export function ExperienceForm({ initialData }: ExperienceFormProps) {
         });
         toast.success("Experience created successfully");
       }
-      router.push("/portfolio/experiences");
+      router.push("/experiences");
       router.refresh();
     } catch (error) {
       console.error("Failed to submit experience:", error);

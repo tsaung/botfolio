@@ -21,16 +21,10 @@ const sidebarItems = [
     icon: LayoutDashboard,
   },
   {
-    title: "Portfolio",
-    href: "/portfolio",
-    icon: Briefcase,
-  },
-  {
     title: "Knowledge Base",
     href: "/knowledge",
     icon: Database,
   },
-
   {
     title: "Settings",
     href: "/settings",
